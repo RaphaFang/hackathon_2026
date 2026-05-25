@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kolding Pulse — Urban Intelligence</title>
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Spline+Sans:wght@400;500;600;700&family=Spline+Sans+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0c1f33;
+  --ink-2:#1d3a57;
+  --paper:#f6f3ec;
+  --paper-2:#efe9dd;
+  --line:#d9d0bf;
+  --blue:#185fa5;
+  --blue-deep:#0c2f54;
+  --blue-soft:#e6f1fb;
+  --rust:#c0392b;
+  --amber:#e08a3c;
+  --green:#27ae60;
+  --muted:#6b6357;
+  --shadow:0 18px 50px rgba(12,31,53,.10);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Spline Sans',sans-serif;
+  background:var(--paper);
+  color:var(--ink);
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+body::before{
+  content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.4;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+}
+.wrap{position:relative;z-index:1;max-width:1180px;margin:0 auto;padding:0 28px}
+
+/* ---------- HEADER ---------- */
+header{
+  position:sticky;top:0;z-index:100;
+  background:rgba(246,243,236,.86);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);
+}
+.head-inner{
+  max-width:1180px;margin:0 auto;padding:18px 28px;
+  display:flex;align-items:center;justify-content:space-between;gap:24px;
+}
+.brand{display:flex;align-items:center;gap:16px}
+.brand .crest{
+  width:42px;height:42px;border-radius:11px;flex-shrink:0;
+  background:var(--ink);color:var(--paper);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Fraunces',serif;font-weight:900;font-size:22px;
+}
+.brand h1{font-family:'Fraunces',serif;font-weight:900;font-size:24px;letter-spacing:-.5px;line-height:1}
+.brand span{display:block;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);margin-top:3px;font-weight:600}
+nav{display:flex;gap:28px}
+nav a{
+  text-decoration:none;color:var(--ink-2);font-size:14px;font-weight:600;
+  position:relative;padding-bottom:4px;transition:color .2s;
+}
+nav a::after{content:"";position:absolute;left:0;bottom:0;height:2px;width:0;background:var(--blue);transition:width .25s}
+nav a:hover{color:var(--blue)}
+nav a:hover::after{width:100%}
+@media(max-width:780px){nav{display:none}}
+
+/* ---------- HERO ---------- */
+.hero{padding:74px 0 38px;position:relative}
+.hero .eyebrow{
+  font-family:'Spline Sans Mono',monospace;font-size:13px;letter-spacing:1px;
+  color:var(--blue);margin-bottom:18px;
+}
+.hero h2{
+  font-family:'Fraunces',serif;font-weight:900;
+  font-size:clamp(38px,6vw,68px);line-height:.98;letter-spacing:-2px;
+  max-width:760px;
+}
+.hero h2 em{font-style:italic;color:var(--blue)}
+.hero p{margin-top:22px;max-width:560px;font-size:18px;line-height:1.65;color:var(--ink-2)}
+.hero .meta{
+  margin-top:26px;display:flex;gap:22px;flex-wrap:wrap;
+  font-family:'Spline Sans Mono',monospace;font-size:12.5px;color:var(--muted);
+}
+.hero .meta b{color:var(--ink)}
+
+/* ---------- KPI ---------- */
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin:42px 0 14px}
+@media(max-width:880px){.kpis{grid-template-columns:repeat(2,1fr)}}
+.kpi{
+  background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px 22px;
+  box-shadow:var(--shadow);position:relative;overflow:hidden;
+}
+.kpi::before{content:"";position:absolute;top:0;left:0;width:100%;height:4px;background:var(--blue)}
+.kpi:nth-child(2)::before{background:var(--amber)}
+.kpi:nth-child(3)::before{background:var(--green)}
+.kpi:nth-child(4)::before{background:var(--rust)}
+.kpi .num{font-family:'Fraunces',serif;font-weight:900;font-size:40px;line-height:1;color:var(--ink);letter-spacing:-1px}
+.kpi .lbl{margin-top:9px;font-size:13px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+.kpi .sub{margin-top:6px;font-size:12px;color:var(--ink-2);line-height:1.4}
+
+/* ---------- SECTION ---------- */
+section.block{padding:46px 0;border-top:1px solid var(--line);margin-top:30px}
+.sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:26px;flex-wrap:wrap}
+.sec-head .tag{font-family:'Spline Sans Mono',monospace;font-size:12px;color:var(--blue);letter-spacing:1px}
+.sec-head h3{font-family:'Fraunces',serif;font-weight:900;font-size:32px;letter-spacing:-1px;margin-top:6px;line-height:1.05}
+.sec-head p{max-width:430px;font-size:14.5px;color:var(--muted);line-height:1.55}
+.panel{
+  background:#fff;border:1px solid var(--line);border-radius:20px;padding:26px;
+  box-shadow:var(--shadow);
+}
+.chart{width:100%}
+.note{margin-top:16px;font-size:13px;color:var(--muted);line-height:1.6;border-left:3px solid var(--line);padding-left:14px}
+.note b{color:var(--ink-2)}
+
+/* ---------- FORECASTER ---------- */
+.forecaster{background:var(--ink);color:var(--paper);border-radius:24px;padding:34px;box-shadow:var(--shadow)}
+.forecaster .fc-head{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;flex-wrap:wrap;margin-bottom:24px}
+.forecaster h3{font-family:'Fraunces',serif;font-weight:900;font-size:30px;letter-spacing:-1px;line-height:1}
+.forecaster .fc-sub{color:#9fb6cf;font-size:14px;margin-top:8px;max-width:480px;line-height:1.55}
+.controls{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:8px}
+.ctrl{display:flex;flex-direction:column;gap:7px}
+.ctrl label{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#88a0bb;font-weight:600}
+.ctrl input,.ctrl select{
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.18);color:var(--paper);
+  border-radius:11px;padding:12px 14px;font-family:'Spline Sans',sans-serif;font-size:15px;font-weight:500;
+  outline:none;transition:.2s;min-width:170px;
+}
+.ctrl input:focus,.ctrl select:focus{border-color:var(--blue);background:rgba(24,95,165,.18)}
+.ctrl select option{color:#111}
+.fc-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:24px 0}
+@media(max-width:780px){.fc-stats{grid-template-columns:repeat(2,1fr)}}
+.fc-stat{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:16px 18px}
+.fc-stat .v{font-family:'Fraunces',serif;font-weight:900;font-size:27px;line-height:1}
+.fc-stat .k{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#88a0bb;margin-top:8px;font-weight:600}
+#forecastChart{background:#fff;border-radius:16px;padding:10px 6px;margin-top:8px}
+.fc-foot{margin-top:18px;font-size:13px;color:#9fb6cf;line-height:1.6;display:flex;gap:10px;align-items:flex-start}
+.fc-foot svg{flex-shrink:0;margin-top:2px}
+.accuracy-badge{display:inline-flex;align-items:center;gap:7px;background:rgba(39,174,96,.16);border:1px solid rgba(39,174,96,.4);color:#7be0a0;padding:6px 13px;border-radius:999px;font-size:12.5px;font-weight:600}
+
+/* ---------- WEATHER ---------- */
+.weather-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:22px}
+@media(max-width:880px){.weather-grid{grid-template-columns:1fr}}
+.corr-list{display:flex;flex-direction:column;gap:14px}
+.corr{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px 20px}
+.corr .top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px}
+.corr .name{font-weight:700;font-size:15px}
+.corr .val{font-family:'Spline Sans Mono',monospace;font-size:15px;font-weight:600}
+.corr .bar{height:7px;background:var(--paper-2);border-radius:99px;overflow:hidden;position:relative}
+.corr .bar i{position:absolute;top:0;bottom:0;left:50%;border-radius:99px}
+.corr small{display:block;margin-top:9px;font-size:12px;color:var(--muted);line-height:1.45}
+
+footer{padding:50px 0 60px;border-top:1px solid var(--line);margin-top:40px;color:var(--muted);font-size:13px;line-height:1.7}
+footer b{color:var(--ink-2)}
+
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s cubic-bezier(.2,.7,.3,1),transform .7s cubic-bezier(.2,.7,.3,1)}
+.reveal.in{opacity:1;transform:none}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="head-inner">
+    <div class="brand">
+      <div class="crest">K</div>
+      <div><h1>Kolding Pulse</h1><span>Urban Intelligence · Axeltorv</span></div>
+    </div>
+    <nav>
+      <a href="#rhythm">Rhythm</a>
+      <a href="#heatmap">Calendar</a>
+      <a href="#events">Events</a>
+      <a href="#forecast">Forecast</a>
+      <a href="#weather">Weather</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="hero reveal">
+    <div class="eyebrow">// FEB – MAY 2026 · CAMERA-COUNTED FOOTFALL</div>
+    <h2>How a city square <em>breathes</em> across the week.</h2>
+    <p>Pedestrian arrivals at Axeltorv, decoded hour by hour — when the square fills, why some days surge, and what a normal week looks like ahead.</p>
+    <div class="meta">
+      <span><b id="m-days">—</b> days observed</span>
+      <span><b id="m-ped">—</b> pedestrian arrivals</span>
+      <span><b>10</b> gate sensors</span>
+      <span><b id="m-ev">—</b> regional events tracked</span>
+    </div>
+  </div>
+
+  <div class="kpis reveal">
+    <div class="kpi"><div class="num" id="k-ped">—</div><div class="lbl">Arrivals counted</div><div class="sub">Pedestrians entering the square, Feb–May</div></div>
+    <div class="kpi"><div class="num" id="k-busiest">Sat</div><div class="lbl">Busiest weekday</div><div class="sub" id="k-busiest-sub">avg arrivals/day</div></div>
+    <div class="kpi"><div class="num" id="k-peak">13:00</div><div class="lbl">Peak hour</div><div class="sub">Early-afternoon crest on weekends</div></div>
+    <div class="kpi"><div class="num" id="k-ev">—</div><div class="lbl">Events catalogued</div><div class="sub">Scraped from Kultunaut for context</div></div>
+  </div>
+
+  <!-- RHYTHM -->
+  <section class="block reveal" id="rhythm">
+    <div class="sec-head">
+      <div><div class="tag">01 · DAILY RHYTHM</div><h3>When does Axeltorv come alive?</h3></div>
+      <p>Weekdays build to a single afternoon office-hours peak. Weekends start slower, crest earlier, and carry a faint late-night tail.</p>
+    </div>
+    <div class="panel"><div id="hourlyChart" class="chart"></div>
+      <div class="note"><b>Read it like this:</b> the weekday line climbs steadily to ~16:00 (commute + lunch + after-work), while the weekend curve peaks around midday and fades earlier — a leisure rhythm, not a working one.</div>
+    </div>
+  </section>
+
+  <!-- HEATMAP -->
+  <section class="block reveal" id="heatmap">
+    <div class="sec-head">
+      <div><div class="tag">02 · THE CALENDAR</div><h3>Thirteen weeks at a glance</h3></div>
+      <p>Each cell is one day's total arrivals. The deep-blue February block is winter break plus back-to-back event weekends — the clear high-water mark of the period.</p>
+    </div>
+    <div class="panel"><div id="heatChart" class="chart"></div>
+      <div class="note"><b>The story:</b> activity is front-loaded. February's holiday-and-event cluster dwarfs the calmer spring weeks — useful when planning when the square can absorb a big crowd versus when it needs a draw.</div>
+    </div>
+  </section>
+
+  <!-- EVENTS -->
+  <section class="block reveal" id="events">
+    <div class="sec-head">
+      <div><div class="tag">03 · EVENT SIGNATURES</div><h3>Every event has a fingerprint</h3></div>
+      <p>Plotting an event day's hourly arrivals reveals its shape. Valentine's towers over everything; a run pulls a small, flat early crowd; a school event barely registers on the square itself.</p>
+    </div>
+    <div class="panel"><div id="eventChart" class="chart"></div>
+      <div class="note"><b>Why it matters:</b> two events can draw similar totals but at different hours. The <b style="color:var(--rust)">Valentine's</b> spike is concentrated 11:00–14:00 — that's the window a vendor or pop-up would actually want to be open.</div>
+    </div>
+  </section>
+
+  <!-- FORECAST -->
+  <section class="block reveal" id="forecast">
+    <div class="sec-head">
+      <div><div class="tag">04 · THE FORECASTER</div><h3>What does a normal week ahead look like?</h3></div>
+      <p>Pick any date and scenario. The model rebuilds the expected hourly curve from each weekday's learned rhythm — with an honest range, not a false-precision line.</p>
+    </div>
+    <div class="forecaster">
+      <div class="fc-head">
+        <div>
+          <h3>Hourly arrival forecast</h3>
+          <div class="fc-sub">Decomposition: <span style="font-family:'Spline Sans Mono',monospace;color:#bcd2ea">weekday level × hourly share × scenario lift</span>. Trained on Feb–May 2026 only — it projects the weekly <em>pattern</em>, not surprises or seasonality.</div>
+        </div>
+        <div class="controls">
+          <div class="ctrl"><label>Target date</label><input type="date" id="fcDate" value="2026-06-13" min="2026-01-01" max="2026-12-31"></div>
+          <div class="ctrl"><label>Scenario</label>
+            <select id="fcEvent">
+              <option value="1.0">Normal day</option>
+              <option value="1.45">School holiday weekday (×1.45)</option>
+              <option value="1.60">Valentine's-scale draw (×1.60)</option>
+              <option value="1.90">Fastelavn / family festival (×1.90)</option>
+              <option value="0.65">Public holiday, shops shut (×0.65)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="fc-stats">
+        <div class="fc-stat"><div class="v" id="fcWeekday">—</div><div class="k">Weekday</div></div>
+        <div class="fc-stat"><div class="v" id="fcTotal">—</div><div class="k">Expected arrivals</div></div>
+        <div class="fc-stat"><div class="v" id="fcRange">—</div><div class="k">Likely range</div></div>
+        <div class="fc-stat"><div class="v" id="fcPeak">—</div><div class="k">Busiest hour</div></div>
+      </div>
+      <div id="forecastChart"></div>
+      <div class="fc-foot">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#88a0bb" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+        <div>The shaded band is real day-to-day spread, not a guess. In backtesting on a quiet Sunday (5 Apr) the model overshot by 61% — leisure days are genuinely hard to call. We show that honestly rather than hide it. <span class="accuracy-badge" style="margin-left:6px">Peak-hour direction usually correct</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WEATHER -->
+  <section class="block reveal" id="weather">
+    <div class="sec-head">
+      <div><div class="tag">05 · WEATHER</div><h3>Did the weather move the crowd?</h3></div>
+      <p>Less than you'd expect — and not the way you'd guess. Over this window, footfall ran <em>opposite</em> to temperature, because the coldest days carried the biggest events.</p>
+    </div>
+    <div class="weather-grid">
+      <div class="panel"><div id="scatterChart" class="chart"></div>
+        <div class="note"><b>Each dot is a day.</b> The downward drift is the February cold-but-busy effect — a reminder that correlation here is hostage to <em>what was on</em>, not the climate itself.</div>
+      </div>
+      <div class="corr-list" id="corrList"></div>
+    </div>
+  </section>
+
+  <footer>
+    <b>Kolding Pulse</b> · A reading of pedestrian movement at Axeltorv, Kolding, Feb–May 2026.<br>
+    Footfall from gate-camera counts · weather from DMI open data · events from Kultunaut.
+    Figures describe <b>arrivals (IN)</b> for the <b>pedestrian</b> category. The forecaster captures recurring weekly rhythm and known event lifts — treat single-day numbers as directional, with the shown range.
+  </footer>
+
+</div>
+
+<script>
+const DATA = {"hourly_profile": {"weekday": [5.4, 4.5, 5.3, 7.5, 5.7, 4.5, 7.6, 20.7, 23.2, 27.6, 36.4, 47.7, 55.1, 57.5, 61.1, 65.8, 67.3, 55.2, 47.3, 37.1, 31.1, 20.8, 14.0, 12.1], "weekend": [33.2, 29.4, 27.9, 16.9, 14.8, 9.5, 3.4, 4.5, 8.8, 17.1, 34.4, 48.8, 61.0, 63.4, 57.5, 52.3, 47.0, 43.5, 39.2, 33.5, 25.7, 18.5, 18.1, 19.2]}, "heatmap": {"weeks": ["09 Feb", "16 Feb", "23 Feb", "02 Mar", "09 Mar", "16 Mar", "23 Mar", "30 Mar", "06 Apr", "13 Apr", "20 Apr", "27 Apr", "04 May"], "z": [[771, 4039, 3195, 4344, 1370, 1314, 1501, 1307, 874, 1304, 1701, 986, 1113], [4266, 3773, 3940, 4698, 1608, 1876, 1212, 1755, 1104, 1473, 1456, 947, 1527], [4976, 3972, 3906, 4654, 1148, 1536, 1198, 1667, 1540, 1728, 1276, 871, 1572], [3526, 3629, 4323, 5216, 1526, 1446, 1410, 1068, 1305, 1906, 1340, 1180, 1641], [5994, 4849, 4460, 2409, 1674, 2036, 1532, 1576, 1516, 2048, 1774, 1952, null], [7317, 5856, 5431, 2127, 2038, 1985, 1655, 1723, 1859, 2744, 2281, 1797, null], [3641, 2227, 1752, 988, 1053, 1121, 783, 853, 1023, 1510, 912, 658, null]]}, "model": {"level_mean": [1832.2, 2279.6, 2311.1, 2270.5, 2651.7, 3067.8, 1376.8], "level_std": [1206.8, 1349.8, 1475.5, 1391.9, 1537.1, 1957.2, 842.8], "frac": [[0.00197, 0.00185, 0.00239, 0.00281, 0.00453, 0.0047, 0.01037, 0.03283, 0.03732, 0.04576, 0.0592, 0.07591, 0.07838, 0.08086, 0.08628, 0.09581, 0.10248, 0.0812, 0.06419, 0.05357, 0.03976, 0.02061, 0.00953, 0.00768], [0.003, 0.00159, 0.00364, 0.00439, 0.00432, 0.00287, 0.00881, 0.03388, 0.03273, 0.041, 0.05497, 0.06772, 0.08395, 0.09276, 0.09192, 0.10282, 0.11152, 0.07484, 0.06044, 0.04724, 0.04242, 0.02112, 0.00803, 0.00402], [0.00213, 0.001, 0.00136, 0.00103, 0.00153, 0.00413, 0.00949, 0.02986, 0.03338, 0.04084, 0.05495, 0.07412, 0.08241, 0.08251, 0.08904, 0.09466, 0.09812, 0.08617, 0.07073, 0.05389, 0.0424, 0.02696, 0.01271, 0.00656], [0.00295, 0.00129, 0.00176, 0.00091, 0.00071, 0.00278, 0.01186, 0.03215, 0.02975, 0.04001, 0.04821, 0.0664, 0.08233, 0.08524, 0.08748, 0.08826, 0.09903, 0.0846, 0.07396, 0.05617, 0.04489, 0.03215, 0.01586, 0.01125], [0.00823, 0.00613, 0.00619, 0.00195, 0.00151, 0.00333, 0.00779, 0.01838, 0.02624, 0.03598, 0.05698, 0.07514, 0.08312, 0.08092, 0.09186, 0.09535, 0.08567, 0.07913, 0.06656, 0.04865, 0.04167, 0.02904, 0.02401, 0.02615], [0.03032, 0.02879, 0.02602, 0.01464, 0.01111, 0.00679, 0.00285, 0.00549, 0.01116, 0.02404, 0.05895, 0.08644, 0.09945, 0.10295, 0.08263, 0.07446, 0.06693, 0.06275, 0.05531, 0.04539, 0.03518, 0.02409, 0.02032, 0.02393], [0.0391, 0.03735, 0.03323, 0.02167, 0.01913, 0.00847, 0.0063, 0.00811, 0.01447, 0.02815, 0.04552, 0.06138, 0.07742, 0.0851, 0.09794, 0.0874, 0.08432, 0.07094, 0.05932, 0.04491, 0.03686, 0.01671, 0.01156, 0.00466]]}, "events_sig": {"Valentine's (Sat)": [312, 228, 227, 166, 132, 86, 10, 38, 48, 118, 282, 614, 724, 836, 656, 632, 598, 483, 291, 265, 159, 118, 138, 156], "Fastelavn (Sun)": [172, 165, 183, 99, 139, 42, 11, 22, 43, 109, 180, 235, 304, 397, 329, 299, 300, 246, 133, 73, 83, 34, 33, 10], "School Olympics (Wed)": [2, 2, 0, 0, 3, 4, 11, 54, 54, 44, 57, 120, 136, 109, 114, 169, 150, 76, 156, 136, 107, 46, 9, 13], "Trapholt Run (Sun)": [22, 14, 5, 4, 1, 2, 8, 13, 9, 36, 37, 63, 73, 64, 89, 91, 93, 72, 101, 92, 99, 19, 7, 9]}, "kpi": {"total_ped": 198168, "n_days": 88, "avg_stay": 0.1, "n_events": 1993}, "corrs": {"temp_c": -0.592, "rain_mm": 0.015, "sun_hours": -0.32, "wind_ms": -0.061}, "daily_series": [{"date": "2026-02-09", "footfall": 1643, "temp": null, "rain": null, "sun": null}, {"date": "2026-02-10", "footfall": 8760, "temp": -0.1, "rain": 0.0, "sun": 0.0}, {"date": "2026-02-11", "footfall": 10371, "temp": 0.0, "rain": 0.0, "sun": 0.2}, {"date": "2026-02-12", "footfall": 7445, "temp": -0.5, "rain": 2.8, "sun": 0.3}, {"date": "2026-02-13", "footfall": 13207, "temp": -3.2, "rain": 0.0, "sun": 5.0}, {"date": "2026-02-14", "footfall": 15096, "temp": -5.1, "rain": 0.0, "sun": 7.3}, {"date": "2026-02-15", "footfall": 7109, "temp": -3.4, "rain": 0.0, "sun": 3.7}, {"date": "2026-02-16", "footfall": 8538, "temp": -3.3, "rain": 0.1, "sun": 0.1}, {"date": "2026-02-17", "footfall": 7805, "temp": -3.4, "rain": 1.4, "sun": 0.1}, {"date": "2026-02-18", "footfall": 8202, "temp": -6.7, "rain": 0.0, "sun": 7.4}, {"date": "2026-02-19", "footfall": 7353, "temp": -6.7, "rain": 0.0, "sun": 4.7}, {"date": "2026-02-20", "footfall": 9982, "temp": -2.0, "rain": 0.5, "sun": 1.6}, {"date": "2026-02-21", "footfall": 11881, "temp": 2.7, "rain": 5.1, "sun": 0.8}, {"date": "2026-02-22", "footfall": 4287, "temp": 2.9, "rain": 8.4, "sun": 0.3}, {"date": "2026-02-23", "footfall": 6523, "temp": 4.4, "rain": 3.9, "sun": 0.8}, {"date": "2026-02-24", "footfall": 8111, "temp": 3.2, "rain": 0.0, "sun": 0.9}, {"date": "2026-02-25", "footfall": 7820, "temp": 3.8, "rain": 1.5, "sun": 0.6}, {"date": "2026-02-26", "footfall": 8693, "temp": 7.9, "rain": 0.6, "sun": 0.5}, {"date": "2026-02-27", "footfall": 9463, "temp": 8.1, "rain": 7.6, "sun": 0.0}, {"date": "2026-02-28", "footfall": 10746, "temp": 8.6, "rain": 5.6, "sun": 0.0}, {"date": "2026-03-01", "footfall": 3193, "temp": 5.6, "rain": 0.0, "sun": 3.5}, {"date": "2026-03-02", "footfall": 8675, "temp": 9.1, "rain": 0.5, "sun": 7.0}, {"date": "2026-03-03", "footfall": 9711, "temp": 6.5, "rain": 0.0, "sun": 8.4}, {"date": "2026-03-04", "footfall": 9427, "temp": 3.0, "rain": 0.1, "sun": 8.6}, {"date": "2026-03-05", "footfall": 10781, "temp": 4.4, "rain": 0.0, "sun": 8.4}, {"date": "2026-03-06", "footfall": 4564, "temp": 6.4, "rain": 0.0, "sun": 7.9}, {"date": "2026-03-07", "footfall": 4234, "temp": 6.5, "rain": 0.5, "sun": 1.1}, {"date": "2026-03-08", "footfall": 1945, "temp": 7.1, "rain": 0.1, "sun": 1.6}, {"date": "2026-03-09", "footfall": 2687, "temp": 6.9, "rain": 0.0, "sun": 7.8}, {"date": "2026-03-10", "footfall": 3224, "temp": 4.6, "rain": 0.3, "sun": 0.0}, {"date": "2026-03-11", "footfall": 2276, "temp": 7.4, "rain": 2.4, "sun": 1.4}, {"date": "2026-03-12", "footfall": 3026, "temp": 6.9, "rain": 0.0, "sun": 4.2}, {"date": "2026-03-13", "footfall": 3231, "temp": 7.1, "rain": 1.7, "sun": 0.2}, {"date": "2026-03-14", "footfall": 4034, "temp": 4.4, "rain": 0.0, "sun": 0.8}, {"date": "2026-03-15", "footfall": 2070, "temp": 5.4, "rain": 0.0, "sun": 7.0}, {"date": "2026-03-16", "footfall": 2539, "temp": 4.9, "rain": 3.1, "sun": 3.3}, {"date": "2026-03-17", "footfall": 3611, "temp": 6.3, "rain": 0.0, "sun": 0.2}, {"date": "2026-03-18", "footfall": 3050, "temp": 8.0, "rain": 0.0, "sun": 5.7}, {"date": "2026-03-19", "footfall": 2815, "temp": 5.8, "rain": 0.0, "sun": 7.0}, {"date": "2026-03-20", "footfall": 3834, "temp": 5.7, "rain": 0.0, "sun": 9.2}, {"date": "2026-03-21", "footfall": 3940, "temp": 3.4, "rain": 0.0, "sun": 0.5}, {"date": "2026-03-22", "footfall": 2212, "temp": 5.7, "rain": 0.0, "sun": 9.1}, {"date": "2026-03-23", "footfall": 2831, "temp": 5.6, "rain": 0.0, "sun": 2.3}, {"date": "2026-03-24", "footfall": 2400, "temp": 7.3, "rain": 2.9, "sun": 0.0}, {"date": "2026-03-25", "footfall": 2299, "temp": 6.2, "rain": 5.8, "sun": 3.3}, {"date": "2026-03-26", "footfall": 2760, "temp": 4.4, "rain": 0.3, "sun": 4.3}, {"date": "2026-03-27", "footfall": 2960, "temp": 4.8, "rain": 0.0, "sun": 9.4}, {"date": "2026-03-28", "footfall": 3403, "temp": 5.7, "rain": 0.4, "sun": 8.0}, {"date": "2026-03-29", "footfall": 1539, "temp": 5.0, "rain": 3.8, "sun": 3.8}, {"date": "2026-03-30", "footfall": 2646, "temp": 5.3, "rain": 4.8, "sun": 5.3}, {"date": "2026-03-31", "footfall": 3511, "temp": 7.2, "rain": 0.0, "sun": 6.8}, {"date": "2026-04-01", "footfall": 3322, "temp": 5.6, "rain": 0.0, "sun": 2.2}, {"date": "2026-04-02", "footfall": 2118, "temp": 5.6, "rain": 0.2, "sun": 3.0}, {"date": "2026-04-03", "footfall": 3249, "temp": 5.7, "rain": 1.6, "sun": 2.8}, {"date": "2026-04-04", "footfall": 3486, "temp": 7.1, "rain": 0.9, "sun": 9.1}, {"date": "2026-04-05", "footfall": 1731, "temp": 8.7, "rain": 0.1, "sun": 6.9}, {"date": "2026-04-06", "footfall": 1698, "temp": 6.7, "rain": 0.0, "sun": 8.4}, {"date": "2026-04-07", "footfall": 2149, "temp": 7.5, "rain": 0.0, "sun": 12.4}, {"date": "2026-04-08", "footfall": 3028, "temp": 6.8, "rain": 0.0, "sun": 10.8}, {"date": "2026-04-09", "footfall": 2559, "temp": 6.8, "rain": 0.0, "sun": 10.6}, {"date": "2026-04-10", "footfall": 3018, "temp": 5.1, "rain": 8.1, "sun": 3.2}, {"date": "2026-04-11", "footfall": 3617, "temp": 6.0, "rain": 0.1, "sun": 8.6}, {"date": "2026-04-12", "footfall": 1895, "temp": 8.6, "rain": 3.3, "sun": 9.9}, {"date": "2026-04-13", "footfall": 2553, "temp": 6.9, "rain": 2.9, "sun": 0.2}, {"date": "2026-04-14", "footfall": 2835, "temp": 7.5, "rain": 9.1, "sun": 5.0}, {"date": "2026-04-15", "footfall": 3321, "temp": 7.2, "rain": 0.0, "sun": 1.2}, {"date": "2026-04-16", "footfall": 3811, "temp": 10.2, "rain": 0.0, "sun": 6.4}, {"date": "2026-04-17", "footfall": 4647, "temp": 10.1, "rain": 0.0, "sun": 3.4}, {"date": "2026-04-18", "footfall": 5294, "temp": 10.5, "rain": 0.1, "sun": 2.3}, {"date": "2026-04-19", "footfall": 2946, "temp": 8.8, "rain": 0.0, "sun": 2.4}, {"date": "2026-04-20", "footfall": 3341, "temp": 7.3, "rain": 2.4, "sun": 8.4}, {"date": "2026-04-21", "footfall": 2780, "temp": 7.4, "rain": 0.0, "sun": 13.3}, {"date": "2026-04-22", "footfall": 2562, "temp": 8.2, "rain": 0.0, "sun": 13.3}, {"date": "2026-04-23", "footfall": 2667, "temp": 9.5, "rain": 0.0, "sun": 11.9}, {"date": "2026-04-24", "footfall": 3446, "temp": 9.2, "rain": 0.0, "sun": 13.7}, {"date": "2026-04-25", "footfall": 4605, "temp": 7.5, "rain": 0.0, "sun": 6.5}, {"date": "2026-04-26", "footfall": 1744, "temp": 6.6, "rain": 0.0, "sun": 13.7}, {"date": "2026-04-27", "footfall": 1968, "temp": 6.7, "rain": 0.0, "sun": 12.3}, {"date": "2026-04-28", "footfall": 1930, "temp": 8.3, "rain": 0.0, "sun": 13.9}, {"date": "2026-04-29", "footfall": 1842, "temp": 9.6, "rain": 0.0, "sun": 13.9}, {"date": "2026-04-30", "footfall": 2359, "temp": 11.0, "rain": 0.0, "sun": 13.9}, {"date": "2026-05-01", "footfall": 3827, "temp": 13.3, "rain": 0.0, "sun": 13.9}, {"date": "2026-05-02", "footfall": 3584, "temp": 16.2, "rain": 0.0, "sun": 10.1}, {"date": "2026-05-03", "footfall": 1295, "temp": 12.1, "rain": 7.0, "sun": 1.5}, {"date": "2026-05-04", "footfall": 2284, "temp": 10.5, "rain": 0.7, "sun": 12.8}, {"date": "2026-05-05", "footfall": 3094, "temp": 9.3, "rain": 0.0, "sun": 7.5}, {"date": "2026-05-06", "footfall": 3186, "temp": 9.6, "rain": 0.0, "sun": 8.7}, {"date": "2026-05-07", "footfall": 3237, "temp": 10.2, "rain": 0.0, "sun": 6.9}, {"date": "2026-05-08", "footfall": 90, "temp": 10.9, "rain": 0.0, "sun": 11.2}]};
+const DAY=["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
+const BLUE="#185fa5",DEEP="#0c2f54",AMBER="#e08a3c",RUST="#c0392b",GREEN="#27ae60";
+const FONT={family:"Spline Sans, sans-serif",color:"#1d3a57",size:13};
+const LAYOUT_BASE={paper_bgcolor:"rgba(0,0,0,0)",plot_bgcolor:"rgba(0,0,0,0)",font:FONT,
+  margin:{t:18,r:18,b:46,l:54},showlegend:true,
+  legend:{orientation:"h",y:1.12,x:0,font:{size:13}},
+  xaxis:{gridcolor:"#ece5d6",zeroline:false},yaxis:{gridcolor:"#ece5d6",zeroline:false}};
+const CFG={displayModeBar:false,responsive:true};
+const fmt=n=>n.toLocaleString("en-US");
+
+/* KPI fill */
+const $=id=>document.getElementById(id);
+const kpi=DATA.kpi;
+$("m-days").textContent=kpi.n_days; $("m-ped").textContent=fmt(kpi.total_ped); $("m-ev").textContent=fmt(kpi.n_events);
+$("k-ped").textContent=fmt(kpi.total_ped); $("k-ev").textContent=fmt(kpi.n_events);
+const lv=DATA.model.level_mean;
+let bi=0; lv.forEach((v,i)=>{if(v>lv[bi])bi=i});
+document.getElementById("k-busiest").textContent=["Mon","Tue","Wed","Thu","Fri","Sat","Sun"][bi];
+document.getElementById("k-busiest-sub").textContent="~"+fmt(Math.round(lv[bi]))+" arrivals/day";
+
+/* 1. hourly profile */
+const hrs=[...Array(24).keys()];
+Plotly.newPlot("hourlyChart",[
+  {x:hrs,y:DATA.hourly_profile.weekday,type:"scatter",mode:"lines",name:"Weekday",
+   line:{color:BLUE,width:3.5,shape:"spline"},fill:"tozeroy",fillcolor:"rgba(24,95,165,.07)"},
+  {x:hrs,y:DATA.hourly_profile.weekend,type:"scatter",mode:"lines",name:"Weekend",
+   line:{color:AMBER,width:3.5,shape:"spline"}}
+],{...LAYOUT_BASE,height:380,
+   xaxis:{...LAYOUT_BASE.xaxis,title:"Hour of day",dtick:2},
+   yaxis:{...LAYOUT_BASE.yaxis,title:"Avg arrivals / hour"}},CFG);
+
+/* 2. heatmap */
+Plotly.newPlot("heatChart",[{
+  z:DATA.heatmap.z,x:DATA.heatmap.weeks,y:["Mon","Tue","Wed","Thu","Fri","Sat","Sun"],
+  type:"heatmap",colorscale:[[0,"#eef4fb"],[.5,"#5e9bd6"],[1,"#0c2f54"]],
+  hoverongaps:false,xgap:3,ygap:3,
+  colorbar:{title:{text:"arrivals",side:"right"},thickness:12,len:.85,outlinewidth:0},
+  hovertemplate:"%{y}, %{x}<br>%{z:,} arrivals<extra></extra>"
+}],{...LAYOUT_BASE,height:360,showlegend:false,margin:{t:10,r:10,b:60,l:46},
+   xaxis:{tickangle:-45,gridcolor:"rgba(0,0,0,0)"},yaxis:{autorange:"reversed",gridcolor:"rgba(0,0,0,0)"}},CFG);
+
+/* 3. event signatures */
+const sig=DATA.events_sig, sigColors={"Valentine's (Sat)":RUST,"Fastelavn (Sun)":AMBER,"School Olympics (Wed)":GREEN,"Trapholt Run (Sun)":BLUE};
+const eHrs=[...Array(24).keys()].slice(8,22);
+Plotly.newPlot("eventChart",Object.keys(sig).map(k=>({
+  x:eHrs,y:eHrs.map(h=>sig[k][h]),type:"scatter",mode:"lines",name:k,
+  line:{color:sigColors[k],width:3,shape:"spline"}
+})),{...LAYOUT_BASE,height:400,
+   xaxis:{...LAYOUT_BASE.xaxis,title:"Hour of day",dtick:2},
+   yaxis:{...LAYOUT_BASE.yaxis,title:"Arrivals / hour"}},CFG);
+
+/* 4. forecaster */
+function forecast(){
+  const d=new Date(document.getElementById("fcDate").value+"T12:00:00");
+  if(isNaN(d)){return;}
+  const dow=(d.getDay()+6)%7;             // JS Sun=0 -> our Mon=0
+  const mult=parseFloat(document.getElementById("fcEvent").value);
+  const mean=DATA.model.level_mean[dow], std=DATA.model.level_std[dow], frac=DATA.model.frac[dow];
+  const exp=hrs.map(h=>mean*frac[h]*mult);
+  const band=hrs.map(h=>std*frac[h]*mult);
+  const low=exp.map((v,i)=>Math.max(0,v-band[i])), high=exp.map((v,i)=>v+band[i]);
+  const total=Math.round(mean*mult), lo=Math.round(Math.max(0,(mean-std)*mult)), hi=Math.round((mean+std)*mult);
+  let pk=0; exp.forEach((v,i)=>{if(v>exp[pk])pk=i});
+
+  document.getElementById("fcWeekday").textContent=DAY[dow];
+  document.getElementById("fcTotal").textContent=fmt(total);
+  document.getElementById("fcRange").textContent=fmt(lo)+"–"+fmt(hi);
+  document.getElementById("fcPeak").textContent=String(pk).padStart(2,"0")+":00";
+
+  const dark={paper_bgcolor:"rgba(0,0,0,0)",plot_bgcolor:"rgba(0,0,0,0)",
+    font:{family:"Spline Sans",color:"#1d3a57",size:12.5},height:360,
+    margin:{t:14,r:16,b:42,l:52},
+    legend:{orientation:"h",y:1.14,x:0,font:{size:12.5}},
+    xaxis:{title:"Hour of day",dtick:2,gridcolor:"#eef0f3",zeroline:false},
+    yaxis:{title:"Arrivals / hour",gridcolor:"#eef0f3",zeroline:false}};
+  Plotly.react("forecastChart",[
+    {x:hrs,y:high,type:"scatter",mode:"lines",line:{width:0},showlegend:false,hoverinfo:"skip"},
+    {x:hrs,y:low,type:"scatter",mode:"lines",line:{width:0},fill:"tonexty",
+     fillcolor:"rgba(24,95,165,.16)",name:"Likely range",hoverinfo:"skip"},
+    {x:hrs,y:exp.map(v=>Math.round(v*10)/10),type:"scatter",mode:"lines",name:"Expected",
+     line:{color:BLUE,width:3.5,shape:"spline"},
+     hovertemplate:"%{x}:00 — ~%{y:.0f}/hr<extra></extra>"}
+  ],dark,CFG);
+}
+document.getElementById("fcDate").addEventListener("change",forecast);
+document.getElementById("fcEvent").addEventListener("change",forecast);
+forecast();
+
+/* 5. weather scatter + corr */
+const ds=DATA.daily_series.filter(r=>r.temp!==null&&r.footfall>200);
+Plotly.newPlot("scatterChart",[{
+  x:ds.map(r=>r.temp),y:ds.map(r=>r.footfall),type:"scatter",mode:"markers",
+  marker:{size:11,color:ds.map(r=>r.footfall),colorscale:[[0,"#9ec4ea"],[1,"#0c2f54"]],
+    opacity:.85,line:{color:"#fff",width:1}},
+  text:ds.map(r=>r.date),hovertemplate:"%{text}<br>%{x}°C · %{y:,} arrivals<extra></extra>",
+  showlegend:false
+}],{...LAYOUT_BASE,height:360,showlegend:false,
+   xaxis:{...LAYOUT_BASE.xaxis,title:"Mean temperature (°C)"},
+   yaxis:{...LAYOUT_BASE.yaxis,title:"Daily arrivals"}},CFG);
+
+const cMeta={temp_c:["Temperature","Cold-but-busy February events flip the usual sign."],
+  sun_hours:["Sunshine","Sunnier spring days were quieter, not busier."],
+  wind_ms:["Wind speed","Essentially no relationship."],
+  rain_mm:["Rainfall","No measurable effect on this square."]};
+const cl=document.getElementById("corrList");
+Object.entries(DATA.corrs).sort((a,b)=>Math.abs(b[1])-Math.abs(a[1])).forEach(([k,v])=>{
+  const w=Math.min(50,Math.abs(v)*100), color=v<0?RUST:GREEN, side=v<0?"right:50%":"left:50%";
+  cl.innerHTML+=`<div class="corr"><div class="top"><span class="name">${cMeta[k][0]}</span>
+    <span class="val" style="color:${color}">r = ${v>0?"+":""}${v.toFixed(2)}</span></div>
+    <div class="bar"><i style="${side};width:${w}%;background:${color}"></i></div>
+    <small>${cMeta[k][1]}</small></div>`;
+});
+
+/* reveal on scroll */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target);}}),{threshold:.12});
+document.querySelectorAll(".reveal").forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
