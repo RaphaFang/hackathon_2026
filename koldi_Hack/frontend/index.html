@@ -1,5 +1,4 @@
-
-<!DOCTYPE html>
+<!--  <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -11,17 +10,13 @@
 <body>
 
 <nav class="navbar">
-
     <div class="nav-left">
-        <img src="assets/kolding_kommune_image.png"
-             alt="Kolding Kommune">
+        <img src="assets/kolding_kommune_image.png" alt="Kolding Kommune">
     </div>
-
     <div class="nav-center">
         <h1>Kolding Pulse</h1>
         <p>Urban Intelligence Platform</p>
     </div>
-
     <div class="nav-right">
         <a href="#">Overview</a>
         <a href="#">Movement</a>
@@ -29,7 +24,6 @@
         <a href="#">Events</a>
         <a href="#">AI Insights</a>
     </div>
-
 </nav>
 
 <section class="hero">
@@ -45,12 +39,10 @@
         <h3>Total Movement</h3>
         <h2 id="movement">--</h2>
     </div>
-
     <div class="card">
         <h3>Events</h3>
         <h2 id="events">--</h2>
     </div>
-
     <div class="card">
         <h3>Avg Stay</h3>
         <h2 id="stay">--</h2>
@@ -62,64 +54,315 @@
         <h2>City Movement Timeline</h2>
         <div id="movementChart"></div>
     </div>
-
     <div class="panel">
         <h2>Stay Behaviour</h2>
         <div id="stayChart"></div>
     </div>
 </section>
 
-
 <script src="app.js"></script>
 
-<button id="chat-toggle">
+<button id="chat-toggle">🤖</button>
+
+<div id="chat-popup">
+    <div class="chat-header">Kolding AI Assistant</div>
+
+    <div id="chat-messages">
+        <div class="ai-msg">Hello — ask about events, city activity or mobility.</div>
+    </div>
+
+    <div class="chat-input-area">
+        <div class="input-wrapper">
+            <textarea
+                id="question"
+                placeholder="Ask Kolding AI..."
+                rows="1"
+            ></textarea>
+            <button class="send-btn" onclick="askAI()">➜</button>
+        </div>
+    </div>
+</div>
+
+ <script>
+function toggleChat() {
+    const popup = document.getElementById('chat-popup');
+    popup.style.display = popup.style.display === 'flex' ? 'none' : 'flex';
+}
+
+const textarea = document.getElementById('question');
+
+textarea.addEventListener('input', function () {
+    this.style.height = 'auto';
+    this.style.height = Math.min(this.scrollHeight, 140) + 'px';
+});
+
+textarea.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        askAI();
+    }
+});
+</script>
+
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0"
+/>
+
+<title>
+Kolding Pulse | Urban Intelligence
+</title>
+
+<link
+rel="stylesheet"
+href="styles.css"
+/>
+
+<link
+rel="preconnect"
+href="https://fonts.googleapis.com"
+/>
+
+<link
+rel="preconnect"
+href="https://fonts.gstatic.com"
+crossorigin
+/>
+
+<link
+href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+rel="stylesheet"
+/>
+
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+
+</head>
+<body>
+
+<!-- NAVBAR -->
+
+<nav class="navbar">
+
+<div class="nav-left">
+<img
+src="assets/kolding_kommune_image.png"
+alt="Kolding Kommune"
+/>
+</div>
+
+<div class="nav-center">
+<h1>Kolding Pulse</h1>
+<p>Urban Intelligence Platform</p>
+</div>
+
+<div class="nav-right">
+<a href="index.html">Overview</a>
+<a href="city.html">City</a>
+<a href="stay.html">Stay</a>
+<a href="parking.html">Parking</a>
+<a href="ai.html">AI</a>
+<a>Kolding Quest</a>
+</div>
+
+</nav>
+
+
+<!-- HERO -->
+
+<section class="hero">
+
+<div class="hero-content">
+
+<h1>
+Understanding Urban Life
+in Kolding
+</h1>
+
+<p>
+AI-powered municipality intelligence
+for movement, stay behaviour and
+urban activity.
+</p>
+
+</div>
+
+</section>
+
+
+<!-- KPI -->
+
+<section class="kpis">
+
+<div class="card">
+<h3>Total Movement</h3>
+<h2 id="movement">--</h2>
+</div>
+
+<div class="card">
+<h3>Events</h3>
+<h2 id="events">--</h2>
+</div>
+
+<div class="card">
+<h3>Avg Stay</h3>
+<h2 id="stay">--</h2>
+</div>
+
+<div class="card ai-card">
+<h3>AI Insight</h3>
+<p id="insight">
+Loading AI insight...
+</p>
+</div>
+
+</section>
+
+
+<!-- CHARTS -->
+
+<section class="dashboard">
+
+<div class="panel">
+
+<h2>
+Movement Timeline
+</h2>
+
+<div id="movementChart"></div>
+
+</div>
+
+<div class="panel">
+
+<h2>
+Stay Behaviour
+</h2>
+
+<div id="stayChart"></div>
+
+</div>
+
+</section>
+
+
+
+
+<!-- CHAT BUTTON -->
+
+<button
+id="chat-toggle"
+aria-label="Open AI Assistant"
+>
 🤖
 </button>
 
-<div id="chat-popup">
 
-    <div class="chat-header">
-        Kolding AI Assistant
-    </div>
+<!-- CHAT WINDOW -->
 
-    <div id="chat-messages">
-        <div class="ai-msg">
-            Hello — ask about events, city activity or mobility.
-        </div>
-    </div>
+<div
+id="chat-popup"
+role="dialog"
+>
 
-    <!-- <div class="chat-input-area">
-        <textarea
-            id="question"
-            placeholder="Ask Kolding AI..."
-        ></textarea>
+<div class="chat-header">
 
-        <button onclick="askAI()">
-            Send
-        </button>
-    </div> -->
-
-    <div class="chat-input-area">
-
-    <div class="input-wrapper">
-
-        <textarea
-            id="question"
-            placeholder="Ask Kolding AI..."
-            rows="1"
-        ></textarea>
-
-        <button
-            class="send-btn"
-            onclick="askAI()"
-        >
-            ➜
-        </button>
-
-    </div>
-
-    </div>
+<h3>
+Kolding AI Analyst
+</h3>
 
 </div>
+
+
+<!-- MESSAGES -->
+
+<div id="chat-messages">
+
+<div class="ai-msg welcome">
+
+🏙️ Urban Intelligence Assistant
+
+I can analyse:
+
+• movement patterns  
+• stay behaviour  
+• city vitality  
+• event activity  
+
+Try:
+
+"Why was the city busiest?"
+
+</div>
+
+
+<!-- QUICK QUESTIONS -->
+
+<div class="suggested-questions">
+
+<button
+onclick="quickAsk(this)"
+>
+Peak movement day?
+</button>
+
+<button
+onclick="quickAsk(this)"
+>
+Weekend vs weekday activity
+</button>
+
+<button
+onclick="quickAsk(this)"
+>
+What does stay duration suggest?
+</button>
+
+<button
+onclick="quickAsk(this)"
+>
+Which events increase activity?
+</button>
+
+</div>
+
+</div>
+
+
+<!-- INPUT -->
+
+<div class="chat-input-area">
+
+<div class="input-wrapper">
+
+<textarea
+id="question"
+placeholder="Ask Kolding AI..."
+rows="1"
+></textarea>
+
+<button
+class="send-btn"
+onclick="askAI()"
+>
+➜
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<script src="app.js"></script>
+
 </body>
 </html>

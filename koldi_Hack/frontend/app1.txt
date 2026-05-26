@@ -1,0 +1,227 @@
+// ═══════════════════════════════════════════════════════════════════════════════
+// KOLDING PULSE - CHAT AI FUNCTIONALITY
+// ═══════════════════════════════════════════════════════════════════════════════
+
+// Chat toggle functionality
+const chatToggle = document.getElementById('chat-toggle');
+const chatPopup = document.getElementById('chat-popup');
+const questionInput = document.getElementById('question');
+const chatMessages = document.getElementById('chat-messages');
+
+// Toggle chat window
+chatToggle.addEventListener('click', () => {
+    const isVisible = chatPopup.style.display === 'flex';
+    chatPopup.style.display = isVisible ? 'none' : 'flex';
+    
+    if (!isVisible) {
+        questionInput.focus();
+        // Remove pulse animation when opened
+        chatToggle.classList.remove('pulse');
+    }
+});
+
+// Auto-resize textarea as user types
+questionInput.addEventListener('input', function() {
+    this.style.height = 'auto';
+    this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+});
+
+// Send message on Enter (Shift+Enter for new line)
+questionInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        askAI();
+    }
+});
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// AI CHAT FUNCTION
+// ═══════════════════════════════════════════════════════════════════════════════
+
+async function askAI() {
+    const question = questionInput.value.trim();
+    
+    if (!question) {
+        shakeInput();
+        return;
+    }
+    
+    // Add user message
+    addMessage(question, 'user');
+    
+    // Clear input
+    questionInput.value = '';
+    questionInput.style.height = 'auto';
+    
+    // Show typing indicator
+    const typingId = showTypingIndicator();
+    
+    try {
+        // Call your AI backend here
+        const response = await fetch('/api/chat', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ question })
+        });
+        
+        const data = await response.json();
+        
+        // Remove typing indicator
+        removeTypingIndicator(typingId);
+        
+        // Add AI response
+        addMessage(data.answer || "I'm here to help with Kolding data insights!", 'ai');
+        
+    } catch (error) {
+        console.error('Error:', error);
+        
+        // Remove typing indicator
+        removeTypingIndicator(typingId);
+        
+        // Mock response for demo
+        setTimeout(() => {
+            const mockResponse = generateMockResponse(question);
+            addMessage(mockResponse, 'ai');
+        }, 800);
+    }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// MESSAGE HANDLING
+// ═══════════════════════════════════════════════════════════════════════════════
+
+function addMessage(text, type) {
+    const messageDiv = document.createElement('div');
+    messageDiv.className = type === 'user' ? 'user-msg' : 'ai-msg';
+    messageDiv.textContent = text;
+    
+    chatMessages.appendChild(messageDiv);
+    
+    // Scroll to bottom smoothly
+    setTimeout(() => {
+        chatMessages.scrollTo({
+            top: chatMessages.scrollHeight,
+            behavior: 'smooth'
+        });
+    }, 100);
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// TYPING INDICATOR
+// ═══════════════════════════════════════════════════════════════════════════════
+
+function showTypingIndicator() {
+    const indicator = document.createElement('div');
+    indicator.className = 'typing-indicator';
+    indicator.id = 'typing-' + Date.now();
+    indicator.innerHTML = '<span></span><span></span><span></span>';
+    
+    chatMessages.appendChild(indicator);
+    chatMessages.scrollTo({
+        top: chatMessages.scrollHeight,
+        behavior: 'smooth'
+    });
+    
+    return indicator.id;
+}
+
+function removeTypingIndicator(id) {
+    const indicator = document.getElementById(id);
+    if (indicator) {
+        indicator.remove();
+    }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// INPUT SHAKE ANIMATION
+// ═══════════════════════════════════════════════════════════════════════════════
+
+function shakeInput() {
+    const wrapper = document.querySelector('.input-wrapper');
+    wrapper.style.animation = 'shake 0.5s';
+    setTimeout(() => {
+        wrapper.style.animation = '';
+    }, 500);
+}
+
+// Add shake animation to CSS
+const style = document.createElement('style');
+style.textContent = `
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-8px); }
+    75% { transform: translateX(8px); }
+}
+`;
+document.head.appendChild(style);
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// MOCK RESPONSE GENERATOR (for demo purposes)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+function generateMockResponse(question) {
+    const q = question.toLowerCase();
+    
+    if (q.includes('movement') || q.includes('traffic')) {
+        return "Based on the latest data, Kolding Centrum shows approximately 524,178 total movements. Peak activity occurs between 2-5 PM on weekdays, with pedestrians representing the largest category.";
+    }
+    
+    if (q.includes('event') || q.includes('kultur')) {
+        return "We have 1,993 cultural events registered in our database. The most popular categories are concerts, exhibitions, and workshops. Would you like details on upcoming events?";
+    }
+    
+    if (q.includes('stay') || q.includes('ophold')) {
+        return "The average stay duration in Kolding Centrum is approximately 4.2 minutes. Shopping areas show longer stays (8-12 minutes) while transit zones average 2-3 minutes.";
+    }
+    
+    if (q.includes('help') || q.includes('what can')) {
+        return "I can help you with:\n• Movement and traffic patterns\n• Stay duration analysis\n• Event information and trends\n• Urban activity insights\n\nJust ask me anything about Kolding's urban data!";
+    }
+    
+    // Default response
+    return "I'm here to help analyze Kolding's urban data. Ask me about movement patterns, events, or stay duration statistics!";
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// INITIALIZE - Add pulse to chat button on page load
+// ═══════════════════════════════════════════════════════════════════════════════
+
+window.addEventListener('load', () => {
+    // Add pulse effect to attract attention
+    setTimeout(() => {
+        chatToggle.classList.add('pulse');
+    }, 2000);
+    
+    // Remove pulse after 6 seconds
+    setTimeout(() => {
+        chatToggle.classList.remove('pulse');
+    }, 8000);
+});
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// DASHBOARD DATA LOADING (your existing code)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+// Add your existing chart and data loading code here
+// Example:
+
+async function loadDashboardData() {
+    try {
+        // Load your Excel/CSV files
+        // Update KPIs
+        document.getElementById('movement').textContent = '524,178';
+        document.getElementById('events').textContent = '1,993';
+        document.getElementById('stay').textContent = '4.2 min';
+        
+        // Generate charts
+        // ...
+        
+    } catch (error) {
+        console.error('Error loading dashboard data:', error);
+    }
+}
+
+// Initialize dashboard on page load
+loadDashboardData();
