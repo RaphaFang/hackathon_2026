@@ -56,109 +56,112 @@ Urban Intelligence Platform
 <div class="nav-right">
 <a href="index.html">Overview</a>
 <a href="city.html">City</a>
-<a href="stay.html">Stay</a>
 <a href="parking.html">Parking</a>
-<a href="ai.html">AI</a>
+<a href="forecast.html">Forecast</a>
 <a>Kolding Quest</a>
 </div>
 
 </nav>
 
-<!-- PARKING HERO -->
+<!-- CITY HERO -->
 
-<section class="parking-hero">
+<section class="city-hero">
 
 <div class="hero-content">
 
 <h1>
-Smart Parking
+Urban Activity
 in Kolding
 </h1>
 
 <p>
-Real-time parking access,
-EV charging and mobility
-support across the city.
+AI-powered city intelligence,
+movement patterns and urban
+activity insights.
 </p>
 
 </div>
 
 </section>
-<!-- PARKING PAGE -->
 
-<section
-class="dashboard"
-id="parking"
->
+<!-- CITY ANALYSIS -->
 
-<div
-class="panel parking-panel"
->
+<section class="city-intelligence">
 
-<div class="parking-header">
-
-<div>
+<div class="section-header">
 
 <h2>
-🅿 Smart Parking Intelligence
+Urban Activity Intelligence
 </h2>
 
 <p>
-Live parking access and mobility support
-for Kolding city centre
+Visualizing when people were
+in the city and what types of
+places were open at that time.
 </p>
 
 </div>
 
-<div class="parking-badge">
-LIVE
-</div>
 
-</div>
+<!-- TABS -->
 
-
-<!-- PARKING BUTTON -->
-
-<div class="parking-cta">
-
+<div class="heatmap-tabs">
 <button
-class="parking-btn"
-onclick="window.open(
-'https://parkering.kolding.dk/',
-'_blank'
-)"
+class="tab-btn active"
+onclick="switchHeatmap('weekday', this)"
 >
-
-<div class="parking-icon">
-🅿
-</div>
-
-<div class="parking-text">
-
-<div class="parking-title">
-Open Live Parking Map
-</div>
-
-<div class="parking-sub">
-Real-time parking availability,
-EV charging and city parking
-information
-</div>
-
-</div>
-
-<div class="parking-arrow">
-↗
-</div>
-
+Weekday
 </button>
 
+<button
+class="tab-btn"
+onclick="switchHeatmap('weekend', this)"
+>
+Weekend
+</button>
+
+<button
+class="tab-btn"
+onclick="switchHeatmap('holiday', this)"
+>
+Public Holiday
+</button>
 </div>
+
+<!-- HEATMAP -->
+
+<div class="heatmap-panel">
+
+<iframe
+id="heatmapFrame"
+src="./plotly_heatmaps/plotly_heatmap_weekday.html"
+frameborder="0"
+loading="lazy"
+>
+</iframe>
+
+</div>
+
+<!-- AI INSIGHT -->
+
+<div class="insight-box">
+
+<h3>
+AI Insight
+</h3>
+
+<p id="heatmapInsight">
+
+Weekday activity is mainly
+driven by retail and service
+areas aligned with commuter
+movement.
+
+</p>
 
 </div>
 
 </section>
-
 
 <!-- CHATBOT -->
 

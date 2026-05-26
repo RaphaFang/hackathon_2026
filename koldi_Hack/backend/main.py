@@ -47,12 +47,15 @@
 #     return {"answer": ask_agent(q.question)}
 
 
-from fastapi import FastAPI
+from fastapi import FastAPI , Query
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
 from analysis import *
-from agent import ask_agent
+from agent import ask_agent , parking_ai_insight , forecast_ai_insight
+from parking_analysis import get_parking_analytics
+from forecast_analysis import get_forecast_data, get_forecast_insight
+from city_activity_analysis import CITY_INSIGHTS
 
 app = FastAPI(
     title="Kolding Pulse API"
@@ -158,3 +161,100 @@ def health():
     return {
         "status":"ok"
     }
+
+# Parking
+
+@app.get("/parking-analysis")
+def parking_analysis(
+    date: str = Query("2026-02-14")
+):
+    return get_parking_analytics(date)
+
+# PARKING AI INSIGHT
+
+@app.get("/parking-insight")
+def parking_insight():
+
+    stats_text = """
+Peak occupancy 39%
+Average occupancy 28%
+Peak hour 14:00
+"""
+
+    insight = parking_ai_insight(
+        stats_text
+    )
+
+    return {
+        "insight": insight
+    }
+
+# ======================================
+# FORECAST DATA
+# ======================================
+
+@app.get("/forecast-data")
+def forecast_data():
+
+    return get_forecast_data()
+
+
+# ======================================
+# FORECAST AI
+# ======================================
+
+@app.get("/forecast-insight")
+def forecast_insight():
+
+    return {
+        "insight":
+        get_forecast_insight()
+    }
+
+# CITY
+
+@app.get("/city-insight")
+def city_insight():
+
+    return CITY_INSIGHTS
+
+# =========================
+# FORECAST AI INSIGHT
+# =========================
+
+@app.post("/forecast-insight")
+def forecast_insight(
+    data: dict
+):
+
+    try:
+
+        stats_text = f"""
+Scenario:
+{data["scenario"]}
+
+Expected arrivals:
+{data["expected"]}
+
+Likely range:
+{data["range"]}
+
+Peak hour:
+{data["peak"]}
+"""
+
+        insight = forecast_ai_insight(
+            stats_text
+        )
+
+        return {
+            "insight":
+            insight
+        }
+
+    except:
+
+        return {
+            "insight":
+            "AI forecast insight temporarily unavailable."
+        }

@@ -24,6 +24,8 @@ href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&di
 rel="stylesheet"
 />
 
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+
 </head>
 
 <body>
@@ -54,35 +56,16 @@ Urban Intelligence Platform
 </div>
 
 <div class="nav-right">
-
-<a href="index.html">
-Overview
-</a>
-
-<a href="movement.html">
-Movement
-</a>
-
-<a href="stay.html">
-Stay
-</a>
-
-<a
-href="parking.html"
-class="active-nav"
->
-Parking
-</a>
-
-<a href="ai.html">
-AI
-</a>
+<a href="index.html">Overview</a>
+<a href="city.html">City</a>
+<a href="parking.html">Parking</a>
+<a href="forecast.html">Forecast</a>
 <a>Kolding Quest</a>
 </div>
 
 </nav>
 
-<!-- PARKING HERO -->
+<!-- HERO -->
 
 <section class="parking-hero">
 
@@ -102,18 +85,17 @@ support across the city.
 </div>
 
 </section>
-<!-- PARKING PAGE -->
 
-<section
-class="dashboard"
-id="parking"
->
 
-<div
-class="panel parking-panel"
->
+<!-- DASHBOARD -->
 
-<div class="parking-header">
+<section class="parking-dashboard">
+
+<!-- MAIN GRAPH -->
+
+<div class="parking-main-card">
+
+<div class="section-top">
 
 <div>
 
@@ -122,54 +104,173 @@ class="panel parking-panel"
 </h2>
 
 <p>
-Live parking access and mobility support
-for Kolding city centre
+AI-powered parking occupancy,
+traffic flow and mobility
+analytics for Kolding.
 </p>
 
 </div>
 
-<div class="parking-badge">
-LIVE
+<div class="live-badge">
+LIVE DATA
+</div>
+
+</div>
+
+<div
+id="parkingChart"
+class="parking-chart"
+>
 </div>
 
 </div>
 
 
-<!-- PARKING BUTTON -->
+<!-- KPI -->
 
-<div class="parking-cta">
+<div class="parking-kpi-grid">
+
+<div class="parking-kpi">
+
+<div class="kpi-emoji">
+🅿
+</div>
+
+<h3>
+Occupancy
+</h3>
+
+<p>
+Parking demand and usage
+patterns
+</p>
+
+</div>
+
+<div class="parking-kpi">
+
+<div class="kpi-emoji">
+🚗
+</div>
+
+<h3>
+Traffic Flow
+</h3>
+
+<p>
+Congestion and mobility
+movement
+</p>
+
+</div>
+
+<div class="parking-kpi">
+
+<div class="kpi-emoji">
+⚡
+</div>
+
+<h3>
+EV Charging
+</h3>
+
+<p>
+Sustainable mobility
+support
+</p>
+
+</div>
+
+</div>
+
+
+<!-- SMART ROW -->
+
+<div class="parking-smart-row">
+
+<!-- MAP -->
+
+<div class="smart-card map-card">
+
+<div>
+
+<h3>
+📍 Live Parking Access
+</h3>
+
+<p>
+Official Kolding parking map
+with real-time availability.
+</p>
+
+</div>
 
 <button
-class="parking-btn"
-onclick="window.open(
+class="parking-map-btn"
+onclick="
+window.open(
 'https://parkering.kolding.dk/',
 '_blank'
 )"
 >
 
-<div class="parking-icon">
-🅿
+<div class="btn-icon">
+🗺️
 </div>
 
-<div class="parking-text">
+<div>
 
-<div class="parking-title">
-Open Live Parking Map
+<div class="btn-title">
+Open Parking Map
 </div>
 
-<div class="parking-sub">
-Real-time parking availability,
-EV charging and city parking
-information
+<div class="btn-sub">
+Live parking status
 </div>
 
 </div>
 
-<div class="parking-arrow">
+<div class="btn-arrow">
 ↗
 </div>
 
 </button>
+
+</div>
+
+
+<!-- AI CARD -->
+
+<div class="smart-card ai-card">
+
+<div class="ai-header">
+
+<div class="ai-icon">
+🤖
+</div>
+
+<div>
+
+<h3>
+AI Parking Insight
+</h3>
+
+<div class="ai-status">
+LIVE ANALYSIS
+</div>
+
+</div>
+
+</div>
+
+<p
+id="parkingInsight"
+class="ai-text"
+>
+
+Loading parking intelligence...
+
+</p>
 
 </div>
 
@@ -178,9 +279,7 @@ information
 </section>
 
 
-<!-- CHATBOT -->
-
-<!-- CHAT BUTTON -->
+<!-- CHAT -->
 
 <button
 id="chat-toggle"
@@ -188,9 +287,6 @@ aria-label="Open AI Assistant"
 >
 🤖
 </button>
-
-
-<!-- CHAT WINDOW -->
 
 <div
 id="chat-popup"
@@ -204,9 +300,6 @@ Kolding AI Analyst
 </h3>
 
 </div>
-
-
-<!-- MESSAGES -->
 
 <div id="chat-messages">
 
@@ -226,9 +319,6 @@ Try:
 "Why was the city busiest?"
 
 </div>
-
-
-<!-- QUICK QUESTIONS -->
 
 <div class="suggested-questions">
 
@@ -259,9 +349,6 @@ Which events increase activity?
 </div>
 
 </div>
-
-
-<!-- INPUT -->
 
 <div class="chat-input-area">
 
