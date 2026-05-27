@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Event | Kolding Pulse</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+    <style>
+        body{
+        margin:0;
+        font-family:'Inter',sans-serif;
+        background:#f4f6f8;
+        color:#1f2937;
+        overflow-x:hidden;
+        }
+
+        /* NAVBAR */
+        .navbar{
+        height:110px;
+        background:rgba(255,255,255,.98);
+        backdrop-filter:blur(16px);
+        display:grid;
+        grid-template-columns:1fr auto 1fr;
+        align-items:center;
+        padding:0 65px;
+        box-shadow:0 2px 16px rgba(0,0,0,.05);
+        position:sticky;
+        top:0;
+        z-index:1000;
+        }
+
+        .nav-left img{
+        height:72px;
+        object-fit:contain;
+        }
+
+        .nav-center{
+        text-align:center;
+        }
+
+        .nav-center h1{
+        margin:0;
+        font-size:58px;
+        font-weight:800;
+        color:#17324d;
+        letter-spacing:-2px;
+        }
+
+        .nav-center p{
+        margin-top:8px;
+        font-size:14px;
+        letter-spacing:2px;
+        font-weight:600;
+        color:#6b7280;
+        text-transform:uppercase;
+        }
+
+        .nav-right{
+        display:flex;
+        justify-content:flex-end;
+        gap:42px;
+        }
+
+        .nav-right a{
+        text-decoration:none;
+        color:#17324d;
+        font-weight:700;
+        font-size:17px;
+        transition:.25s;
+        }
+
+        .nav-right a:hover{
+        color:#0d6e8a;
+        }
+
+        /* CITY HERO */
+        .city-hero{
+        height:850px;
+        background:url('assets/city_banner.jpeg');
+        background-size:100% 100%;
+        background-position:center;
+        background-repeat:no-repeat;
+        display:flex;
+        align-items:center;
+        position:relative;
+        overflow:hidden;
+        }
+
+        .city-hero::before{
+        content:"";
+        position:absolute;
+        inset:0;
+        background:linear-gradient(90deg,rgba(15,23,42,.35),rgba(15,23,42,.10));
+        z-index:1;
+        }
+
+        .city-hero::after{
+        content:"";
+        position:absolute;
+        left:0;
+        right:0;
+        bottom:0;
+        height:140px;
+        background:linear-gradient(transparent,#f4f6f8);
+        z-index:2;
+        }
+
+        .city-hero .hero-content{
+        padding-left:85px;
+        max-width:760px;
+        position:relative;
+        z-index:3;
+        }
+
+        .city-hero h1{
+        font-size:86px;
+        line-height:.95;
+        margin:0;
+        font-weight:800;
+        color:white;
+        text-shadow:0 4px 18px rgba(0,0,0,.35);
+        }
+
+        .city-hero p{
+        font-size:28px;
+        line-height:1.7;
+        color:white;
+        margin-top:22px;
+        max-width:640px;
+        text-shadow:0 2px 10px rgba(0,0,0,.25);
+        }
+
+        /* CITY INTELLIGENCE 區塊 */
+        .city-intelligence{
+        width:92%;
+        margin:60px auto;
+        }
+
+        .section-header{
+        text-align:center;
+        margin-bottom:30px;
+        }
+
+        .section-header h2{
+        font-size:40px;
+        color:#17324d;
+        margin-bottom:10px;
+        }
+
+        .section-header p{
+        max-width:760px;
+        margin:auto;
+        color:#64748b;
+        line-height:1.7;
+        }
+
+        /* 滿版無邊框表單面板設定 */
+        .form-panel {
+        background: white;
+        border-radius: 24px;
+        padding: 24px;
+        box-shadow: 0 8px 28px rgba(0,0,0,.08);
+        overflow: hidden;
+        max-width: 860px;
+        margin: 0 auto;
+        border: 1px solid #e2e8f0;
+        }
+
+        .form-panel iframe {
+        width: 100%;
+        height: 1000px; /* 給予足夠高度以容納整個問卷 */
+        border: none;
+        display: block;
+        }
+
+        /* 手機板響應式優化 */
+        @media(max-width:768px){
+        .city-hero h1{ font-size:54px; }
+        .city-hero p{ font-size:20px; }
+        .navbar{ padding:0 20px; }
+        .nav-right{ display:none; }
+        .form-panel { padding: 10px; border-radius: 16px; }
+        .form-panel iframe { height: 1200px; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="nav-left">
+            <img src="assets/kolding_kommune_image.png" alt="Kolding Kommune" />
+        </div>
+
+        <div class="nav-center">
+            <h1>Kolding Pulse</h1>
+            <p>Urban Intelligence Platform</p>
+        </div>
+
+  <div class="nav-right">
+    <a href="index.html">Overview</a>
+    <a href="city.html">City</a>
+    <a href="parking.html">Parking</a>
+    <a href="forecast.html">Forecast</a>
+    <a href="event.html">Event Idea</a>
+    <a>Kolding Quest</a>
+  </div>
+    </nav>
+
+    <section class="city-hero">
+        <div class="hero-content">
+            <h1>Event Idea</h1>
+            <p>Please review and fill out the official form below. Your response helps us bring new idea to Kolding.</p>
+        </div>
+    </section>
+
+    <section class="city-intelligence">
+
+        <div class="form-panel">
+            <iframe 
+                src="https://docs.google.com/forms/d/e/1FAIpQLSejrrKFq3_Ed8z6KsWg0eNPYN9zvxmvTGl0k6Hyy5Jja7jloA/viewform?usp=preview?embedded=true" 
+                marginheight="0" 
+                marginwidth="0">
+                Loading Form...
+            </iframe>
+        </div>
+
+    </section>
+
+</body>
+</html>

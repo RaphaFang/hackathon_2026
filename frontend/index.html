@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kolding Pulse | Urban Intelligence</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    /* 控制問卷外層整體區塊的間距與寬度 */
+    .city-intelligence {
+        width: 92%;
+        margin: 60px auto;
+    }
+
+    /* 問卷區塊上方的文字標題設定 */
+    .section-header {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .section-header h2 {
+        font-size: 40px;
+        color: #17324d;
+        margin-bottom: 10px;
+    }
+
+    .section-header p {
+        max-width: 760px;
+        margin: auto;
+        color: #64748b;
+        line-height: 1.7;
+    }
+
+    /* Google Form 專屬的高質感白色包裝卡片 */
+    .form-panel {
+        background: white;
+        border-radius: 24px;
+        padding: 24px;
+        box-shadow: 0 8px 28px rgba(0,0,0,.08);
+        overflow: hidden;
+        max-width: 860px;
+        margin: 0 auto;
+        border: 1px solid #e2e8f0;
+    }
+
+    /* 確保內嵌的表單滿版、無邊框，並給予足夠的固定高度 */
+    .form-panel iframe {
+        width: 100%;
+        height: 1000px; /* 如果表單內容很長，可以自行加大此數值（例如 1200px）以避免內部捲軸 */
+        border: none;
+        display: block;
+    }
+
+    /* 行動裝置（手機板）的響應式畫面優化 */
+    @media(max-width:768px) {
+        .form-panel { 
+            padding: 10px; 
+            border-radius: 16px; 
+        }
+        .form-panel iframe { 
+            height: 1200px; /* 手機寬度變窄時，表單內容會被拉長，故調高高度 */
+        }
+    }
+</style>
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-left">
+    <img src="assets/kolding_kommune_image.png" alt="Kolding Kommune" />
+  </div>
+  <div class="nav-center">
+    <h1>Kolding Pulse</h1>
+    <p>Urban Intelligence Platform</p>
+  </div>
+  <div class="nav-right">
+    <a href="index.html">Overview</a>
+    <a href="city.html">City</a>
+    <a href="parking.html">Parking</a>
+    <a href="forecast.html">Forecast</a>
+    <a href="event.html">Event Idea</a>
+    <a>Kolding Quest</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-content">
+    <h1>Understanding Urban Life in Kolding</h1>
+    <p>AI-powered municipality intelligence for movement, stay behaviour and urban activity.</p>
+  </div>
+</section>
+
+<section class="kpis">
+  <div class="card">
+    <h3>Total Movement</h3>
+    <h2 id="movement">--</h2>
+  </div>
+  <div class="card">
+    <h3>Events</h3>
+    <h2 id="events">--</h2>
+  </div>
+  <div class="card">
+    <h3>Avg Stay</h3>
+    <h2 id="stay">--</h2>
+  </div>
+  <div class="card ai-card">
+    <h3>AI Insight</h3>
+    <p id="insight">Loading AI insight...</p>
+  </div>
+</section>
+
+<section class="dashboard">
+  <div class="panel">
+    <h2>Movement Timeline</h2>
+    <div id="movementChart"></div>
+  </div>
+  <div class="panel">
+    <h2>Stay Behaviour</h2>
+    <div id="stayChart"></div>
+  </div>
+  <section class="city-intelligence">
+  <section class="city-intelligence">
+
+    <div class="section-header">
+        <h2>Shape the Future of Kolding</h2>
+        <p>
+            How is the city life in Kolding? What can be done to improve? 
+            Your voice matters!
+        </p>
+    </div>
+
+    <div class="form-panel">
+        <iframe 
+            src="https://docs.google.com/forms/d/e/1FAIpQLSejrrKFq3_Ed8z6KsWg0eNPYN9zvxmvTGl0k6Hyy5Jja7jloA/viewform?usp=preview?embedded=true" 
+            marginheight="0" 
+            marginwidth="0">
+            Loading Form...
+        </iframe>
+    </div>
+
+    <style>
+        .city-intelligence {
+            width: 92%;
+            margin: 60px auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .section-header h2 {
+            font-size: 40px;
+            color: #17324d;
+            margin-bottom: 15px;
+            font-weight: 800;
+        }
+
+        .section-header p {
+            max-width: 760px;
+            margin: auto;
+            color: #64748b;
+            line-height: 1.7;
+            font-size: 16px;
+        }
+
+        .form-panel {
+            background: white;
+            border-radius: 24px;
+            padding: 24px;
+            box-shadow: 0 8px 28px rgba(0,0,0,.08);
+            overflow: hidden;
+            max-width: 860px;
+            margin: 0 auto;
+            border: 1px solid #e2e8f0;
+        }
+
+        .form-panel iframe {
+            width: 100%;
+            height: 1000px; /* 如果表單題目較長，可自行增加此數值（例如 1100px）以避免雙捲軸 */
+            border: none;
+            display: block;
+        }
+    </style>
+
+</section>
+
+
+
+  </section>
+</section>
+
+<button id="chat-toggle" aria-label="Open AI Assistant">🤖</button>
+
+<div id="chat-popup" role="dialog">
+  <div class="chat-header">
+    <h3>Kolding AI Analyst</h3>
+  </div>
+  <div id="chat-messages">
+    <div class="ai-msg welcome">
+      🏙️ Urban Intelligence Assistant
+
+      I can analyse:
+
+      • movement patterns
+      • stay behaviour
+      • city vitality
+      • event activity
+
+      Try: "Why was the city busiest?"
+    </div>
+    <div class="suggested-questions">
+      <button onclick="quickAsk(this)">Peak movement day?</button>
+      <button onclick="quickAsk(this)">Weekend vs weekday activity</button>
+      <button onclick="quickAsk(this)">What does stay duration suggest?</button>
+      <button onclick="quickAsk(this)">Which events increase activity?</button>
+    </div>
+  </div>
+  <div class="chat-input-area">
+    <div class="input-wrapper">
+      <textarea id="question" placeholder="Ask Kolding AI..." rows="1"></textarea>
+      <button class="send-btn" onclick="askAI()">➜</button>
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
