@@ -1,0 +1,973 @@
+{
+  "meta": {
+    "total": 96214,
+    "danish": 85413,
+    "foreign": 10801,
+    "men": 47987,
+    "women": 48227,
+    "period": "2026 Q2",
+    "nat_count": 120,
+    "source": "Statistics Denmark, StatBank FOLK1B"
+  },
+  "age": [
+    {
+      "age": "0-4",
+      "men": 2439,
+      "women": 2318,
+      "total": 4757
+    },
+    {
+      "age": "5-9",
+      "men": 2760,
+      "women": 2525,
+      "total": 5285
+    },
+    {
+      "age": "10-14",
+      "men": 2816,
+      "women": 2614,
+      "total": 5430
+    },
+    {
+      "age": "15-19",
+      "men": 3188,
+      "women": 3187,
+      "total": 6375
+    },
+    {
+      "age": "20-24",
+      "men": 2993,
+      "women": 2635,
+      "total": 5628
+    },
+    {
+      "age": "25-29",
+      "men": 2696,
+      "women": 2728,
+      "total": 5424
+    },
+    {
+      "age": "30-34",
+      "men": 3230,
+      "women": 2989,
+      "total": 6219
+    },
+    {
+      "age": "35-39",
+      "men": 3085,
+      "women": 3053,
+      "total": 6138
+    },
+    {
+      "age": "40-44",
+      "men": 2765,
+      "women": 2685,
+      "total": 5450
+    },
+    {
+      "age": "45-49",
+      "men": 2925,
+      "women": 3072,
+      "total": 5997
+    },
+    {
+      "age": "50-54",
+      "men": 3400,
+      "women": 3475,
+      "total": 6875
+    },
+    {
+      "age": "55-59",
+      "men": 3323,
+      "women": 3287,
+      "total": 6610
+    },
+    {
+      "age": "60-64",
+      "men": 3111,
+      "women": 3120,
+      "total": 6231
+    },
+    {
+      "age": "65-69",
+      "men": 2666,
+      "women": 2654,
+      "total": 5320
+    },
+    {
+      "age": "70-74",
+      "men": 2220,
+      "women": 2377,
+      "total": 4597
+    },
+    {
+      "age": "75-79",
+      "men": 1954,
+      "women": 2288,
+      "total": 4242
+    },
+    {
+      "age": "80-84",
+      "men": 1490,
+      "women": 1760,
+      "total": 3250
+    },
+    {
+      "age": "85-89",
+      "men": 685,
+      "women": 951,
+      "total": 1636
+    },
+    {
+      "age": "90-94",
+      "men": 200,
+      "women": 395,
+      "total": 595
+    },
+    {
+      "age": "95-99",
+      "men": 41,
+      "women": 101,
+      "total": 142
+    },
+    {
+      "age": "100 and over",
+      "men": 0,
+      "women": 13,
+      "total": 13
+    }
+  ],
+  "citizenship": [
+    {
+      "name": "Syria",
+      "count": 1001
+    },
+    {
+      "name": "Ukraine",
+      "count": 955
+    },
+    {
+      "name": "Romania",
+      "count": 826
+    },
+    {
+      "name": "Poland",
+      "count": 809
+    },
+    {
+      "name": "Germany",
+      "count": 482
+    },
+    {
+      "name": "Bosnia and Herzegovina",
+      "count": 459
+    },
+    {
+      "name": "Afghanistan",
+      "count": 369
+    },
+    {
+      "name": "India",
+      "count": 361
+    },
+    {
+      "name": "Bangladesh",
+      "count": 308
+    },
+    {
+      "name": "Nepal",
+      "count": 260
+    },
+    {
+      "name": "Iran",
+      "count": 252
+    },
+    {
+      "name": "Lithuania",
+      "count": 216
+    },
+    {
+      "name": "Somalia",
+      "count": 200
+    },
+    {
+      "name": "Kosovo",
+      "count": 193
+    },
+    {
+      "name": "Turkey",
+      "count": 192
+    },
+    {
+      "name": "Russia",
+      "count": 186
+    },
+    {
+      "name": "Vietnam",
+      "count": 175
+    },
+    {
+      "name": "Latvia",
+      "count": 159
+    },
+    {
+      "name": "Iceland",
+      "count": 158
+    },
+    {
+      "name": "Eritrea",
+      "count": 158
+    },
+    {
+      "name": "Hungary",
+      "count": 151
+    },
+    {
+      "name": "Bulgaria",
+      "count": 151
+    },
+    {
+      "name": "Norway",
+      "count": 144
+    },
+    {
+      "name": "Italy",
+      "count": 141
+    },
+    {
+      "name": "Netherlands",
+      "count": 128
+    },
+    {
+      "name": "Thailand",
+      "count": 127
+    },
+    {
+      "name": "Philippines",
+      "count": 125
+    },
+    {
+      "name": "China",
+      "count": 119
+    },
+    {
+      "name": "United Kingdom",
+      "count": 116
+    },
+    {
+      "name": "Sweden",
+      "count": 116
+    },
+    {
+      "name": "Spain",
+      "count": 106
+    },
+    {
+      "name": "Stateless",
+      "count": 105
+    },
+    {
+      "name": "Iraq",
+      "count": 96
+    },
+    {
+      "name": "USA",
+      "count": 87
+    },
+    {
+      "name": "Sri Lanka",
+      "count": 87
+    },
+    {
+      "name": "Serbia",
+      "count": 83
+    },
+    {
+      "name": "Croatia",
+      "count": 66
+    },
+    {
+      "name": "Congo, Democratic Republic",
+      "count": 66
+    },
+    {
+      "name": "Slovakia",
+      "count": 59
+    },
+    {
+      "name": "Portugal",
+      "count": 57
+    },
+    {
+      "name": "France",
+      "count": 54
+    },
+    {
+      "name": "Brazil",
+      "count": 52
+    },
+    {
+      "name": "Greece",
+      "count": 48
+    },
+    {
+      "name": "Czech Republic",
+      "count": 37
+    },
+    {
+      "name": "Uganda",
+      "count": 32
+    },
+    {
+      "name": "Pakistan",
+      "count": 30
+    },
+    {
+      "name": "Mexico",
+      "count": 29
+    },
+    {
+      "name": "Ireland",
+      "count": 27
+    },
+    {
+      "name": "Ghana",
+      "count": 27
+    },
+    {
+      "name": "Nigeria",
+      "count": 26
+    },
+    {
+      "name": "Finland",
+      "count": 23
+    },
+    {
+      "name": "Switzerland",
+      "count": 23
+    },
+    {
+      "name": "Austria",
+      "count": 21
+    },
+    {
+      "name": "Montenegro",
+      "count": 20
+    },
+    {
+      "name": "Tunisia",
+      "count": 20
+    },
+    {
+      "name": "Kenya",
+      "count": 19
+    },
+    {
+      "name": "Lebanon",
+      "count": 18
+    },
+    {
+      "name": "Indonesia",
+      "count": 18
+    },
+    {
+      "name": "Georgia",
+      "count": 17
+    },
+    {
+      "name": "Armenia",
+      "count": 16
+    },
+    {
+      "name": "Canada",
+      "count": 16
+    },
+    {
+      "name": "Cameroon",
+      "count": 15
+    },
+    {
+      "name": "Moldova",
+      "count": 15
+    },
+    {
+      "name": "Republic of North Macedonia",
+      "count": 15
+    },
+    {
+      "name": "Belgium",
+      "count": 14
+    },
+    {
+      "name": "Zambia",
+      "count": 14
+    },
+    {
+      "name": "Tanzania",
+      "count": 14
+    },
+    {
+      "name": "Estonia",
+      "count": 13
+    },
+    {
+      "name": "Ethiopia",
+      "count": 13
+    },
+    {
+      "name": "Myanmar",
+      "count": 13
+    },
+    {
+      "name": "Slovenia",
+      "count": 13
+    },
+    {
+      "name": "Morocco",
+      "count": 13
+    },
+    {
+      "name": "South Korea",
+      "count": 12
+    },
+    {
+      "name": "Japan",
+      "count": 12
+    },
+    {
+      "name": "Egypt",
+      "count": 12
+    },
+    {
+      "name": "Sudan",
+      "count": 12
+    },
+    {
+      "name": "Australia",
+      "count": 11
+    },
+    {
+      "name": "Uzbekistan",
+      "count": 11
+    },
+    {
+      "name": "Albania",
+      "count": 11
+    },
+    {
+      "name": "Colombia",
+      "count": 11
+    },
+    {
+      "name": "Argentina",
+      "count": 11
+    },
+    {
+      "name": "Chile",
+      "count": 10
+    },
+    {
+      "name": "Algeria",
+      "count": 8
+    },
+    {
+      "name": "Peru",
+      "count": 8
+    },
+    {
+      "name": "Israel",
+      "count": 7
+    },
+    {
+      "name": "Namibia",
+      "count": 7
+    },
+    {
+      "name": "Belarus",
+      "count": 6
+    },
+    {
+      "name": "South Africa",
+      "count": 6
+    },
+    {
+      "name": "New Zealand",
+      "count": 5
+    },
+    {
+      "name": "Venezuela",
+      "count": 5
+    },
+    {
+      "name": "Liberia",
+      "count": 5
+    },
+    {
+      "name": "Libya",
+      "count": 5
+    },
+    {
+      "name": "Congo, Republic",
+      "count": 4
+    },
+    {
+      "name": "Ecuador",
+      "count": 4
+    },
+    {
+      "name": "Cuba",
+      "count": 4
+    },
+    {
+      "name": "Serbia and Montenegro",
+      "count": 3
+    },
+    {
+      "name": "Jordan",
+      "count": 3
+    },
+    {
+      "name": "Guinea",
+      "count": 3
+    },
+    {
+      "name": "Yugoslavia",
+      "count": 3
+    },
+    {
+      "name": "Zimbabwe",
+      "count": 3
+    },
+    {
+      "name": "Azerbaijan",
+      "count": 3
+    },
+    {
+      "name": "Taiwan",
+      "count": 2
+    },
+    {
+      "name": "Singapore",
+      "count": 2
+    },
+    {
+      "name": "Benin",
+      "count": 2
+    },
+    {
+      "name": "Yugoslavia, Federal Republic",
+      "count": 1
+    },
+    {
+      "name": "Yemen",
+      "count": 1
+    },
+    {
+      "name": "Cyprus",
+      "count": 1
+    },
+    {
+      "name": "Malta",
+      "count": 1
+    },
+    {
+      "name": "Fiji",
+      "count": 1
+    },
+    {
+      "name": "Honduras",
+      "count": 1
+    },
+    {
+      "name": "Dominican Republic",
+      "count": 1
+    },
+    {
+      "name": "Central African Republic",
+      "count": 1
+    },
+    {
+      "name": "Gambia, The",
+      "count": 1
+    },
+    {
+      "name": "Mozambique",
+      "count": 1
+    },
+    {
+      "name": "Rwanda",
+      "count": 1
+    },
+    {
+      "name": "Africa not stated",
+      "count": 1
+    },
+    {
+      "name": "Cambodia",
+      "count": 1
+    },
+    {
+      "name": "Belize",
+      "count": 1
+    },
+    {
+      "name": "El Salvador",
+      "count": 1
+    },
+    {
+      "name": "Costa Rica",
+      "count": 1
+    }
+  ],
+  "heat": {
+    "ages": [
+      "0-4",
+      "5-9",
+      "10-14",
+      "15-19",
+      "20-24",
+      "25-29",
+      "30-34",
+      "35-39",
+      "40-44",
+      "45-49",
+      "50-54",
+      "55-59",
+      "60-64",
+      "65-69",
+      "70-74",
+      "75-79",
+      "80-84",
+      "85-89",
+      "90-94",
+      "95-99",
+      "100 and over"
+    ],
+    "nats": [
+      {
+        "name": "Syria",
+        "vals": [
+          80,
+          114,
+          126,
+          89,
+          85,
+          77,
+          88,
+          86,
+          87,
+          62,
+          43,
+          24,
+          11,
+          18,
+          5,
+          3,
+          2,
+          0,
+          1,
+          0,
+          0
+        ],
+        "total": 1001
+      },
+      {
+        "name": "Ukraine",
+        "vals": [
+          49,
+          73,
+          73,
+          89,
+          104,
+          56,
+          105,
+          127,
+          85,
+          67,
+          25,
+          18,
+          27,
+          23,
+          18,
+          12,
+          1,
+          3,
+          0,
+          0,
+          0
+        ],
+        "total": 955
+      },
+      {
+        "name": "Romania",
+        "vals": [
+          49,
+          64,
+          40,
+          34,
+          75,
+          83,
+          96,
+          150,
+          106,
+          60,
+          32,
+          19,
+          8,
+          3,
+          5,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        "total": 826
+      },
+      {
+        "name": "Poland",
+        "vals": [
+          23,
+          32,
+          56,
+          39,
+          68,
+          81,
+          75,
+          96,
+          113,
+          95,
+          50,
+          34,
+          14,
+          17,
+          10,
+          4,
+          0,
+          0,
+          2,
+          0,
+          0
+        ],
+        "total": 809
+      },
+      {
+        "name": "Germany",
+        "vals": [
+          15,
+          14,
+          17,
+          21,
+          45,
+          39,
+          30,
+          46,
+          29,
+          46,
+          45,
+          45,
+          26,
+          18,
+          15,
+          10,
+          14,
+          6,
+          1,
+          0,
+          0
+        ],
+        "total": 482
+      },
+      {
+        "name": "Bosnia and Herzegovina",
+        "vals": [
+          13,
+          11,
+          21,
+          13,
+          17,
+          18,
+          27,
+          46,
+          41,
+          21,
+          32,
+          33,
+          44,
+          53,
+          30,
+          25,
+          9,
+          3,
+          2,
+          0,
+          0
+        ],
+        "total": 459
+      },
+      {
+        "name": "Afghanistan",
+        "vals": [
+          20,
+          31,
+          21,
+          28,
+          24,
+          30,
+          38,
+          42,
+          31,
+          17,
+          20,
+          15,
+          15,
+          15,
+          5,
+          3,
+          5,
+          7,
+          1,
+          1,
+          0
+        ],
+        "total": 369
+      },
+      {
+        "name": "India",
+        "vals": [
+          29,
+          22,
+          17,
+          11,
+          22,
+          68,
+          80,
+          56,
+          30,
+          15,
+          9,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "total": 361
+      },
+      {
+        "name": "Bangladesh",
+        "vals": [
+          14,
+          9,
+          5,
+          4,
+          84,
+          115,
+          49,
+          22,
+          4,
+          0,
+          2,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "total": 308
+      },
+      {
+        "name": "Nepal",
+        "vals": [
+          6,
+          5,
+          2,
+          3,
+          109,
+          69,
+          41,
+          16,
+          8,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "total": 260
+      },
+      {
+        "name": "Iran",
+        "vals": [
+          15,
+          16,
+          19,
+          9,
+          9,
+          13,
+          21,
+          35,
+          44,
+          20,
+          18,
+          15,
+          9,
+          7,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "total": 252
+      },
+      {
+        "name": "Lithuania",
+        "vals": [
+          9,
+          12,
+          9,
+          9,
+          10,
+          28,
+          35,
+          30,
+          24,
+          18,
+          14,
+          9,
+          6,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "total": 216
+      }
+    ]
+  }
+}

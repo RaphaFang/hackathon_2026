@@ -8,64 +8,109 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <style>
-    /* 控制問卷外層整體區塊的間距與寬度 */
-    .city-intelligence {
-        width: 92%;
-        margin: 60px auto;
-    }
-
-    /* 問卷區塊上方的文字標題設定 */
-    .section-header {
-        text-align: center;
-        margin-bottom: 30px;
-    }
-
-    .section-header h2 {
-        font-size: 40px;
-        color: #17324d;
-        margin-bottom: 10px;
-    }
-
-    .section-header p {
-        max-width: 760px;
-        margin: auto;
-        color: #64748b;
-        line-height: 1.7;
-    }
-
-    /* Google Form 專屬的高質感白色包裝卡片 */
-    .form-panel {
-        background: white;
-        border-radius: 24px;
-        padding: 24px;
-        box-shadow: 0 8px 28px rgba(0,0,0,.08);
-        overflow: hidden;
-        max-width: 860px;
-        margin: 0 auto;
-        border: 1px solid #e2e8f0;
-    }
-
-    /* 確保內嵌的表單滿版、無邊框，並給予足夠的固定高度 */
-    .form-panel iframe {
-        width: 100%;
-        height: 1000px; /* 如果表單內容很長，可以自行加大此數值（例如 1200px）以避免內部捲軸 */
-        border: none;
-        display: block;
-    }
-
-    /* 行動裝置（手機板）的響應式畫面優化 */
-    @media(max-width:768px) {
-        .form-panel { 
-            padding: 10px; 
-            border-radius: 16px; 
-        }
-        .form-panel iframe { 
-            height: 1200px; /* 手機寬度變窄時，表單內容會被拉長，故調高高度 */
-        }
-    }
-</style>
   <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+  <style>
+    /* ── Survey embed ─────────────────────────────────────── */
+    .city-intelligence { width: 92%; margin: 60px auto; }
+    .section-header { text-align: center; margin-bottom: 40px; }
+    .section-header h2 { font-size: 40px; color: #17324d; margin-bottom: 15px; font-weight: 800; }
+    .section-header p { max-width: 760px; margin: auto; color: #64748b; line-height: 1.7; font-size: 16px; }
+    .form-panel {
+      background: #fff; border-radius: 24px; padding: 24px;
+      box-shadow: 0 8px 28px rgba(0,0,0,.08); overflow: hidden;
+      max-width: 860px; margin: 0 auto; border: 1px solid #e2e8f0;
+    }
+    .form-panel iframe { width: 100%; height: 1000px; border: none; display: block; }
+    @media (max-width: 768px) {
+      .form-panel { padding: 10px; border-radius: 16px; }
+      .form-panel iframe { height: 1200px; }
+    }
+
+    /* ── Demographics ─────────────────────────────────────── */
+    .demographics { width: 92%; max-width: 1200px; margin: 60px auto; }
+    .demographics .section-header h2 { font-size: 36px; }
+    .demo-source {
+      display: inline-block; font-size: 12px; letter-spacing: .12em;
+      text-transform: uppercase; color: #64748b; margin-top: 8px;
+    }
+    .demo-source strong { color: #17324d; }
+
+    .demo-stats {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px;
+      margin: 36px 0;
+    }
+    .demo-stat {
+      background: #fff; border: 1px solid #e2e8f0; border-radius: 18px;
+      padding: 22px 20px; box-shadow: 0 4px 14px rgba(0,0,0,.04);
+    }
+    .demo-stat h3 {
+      font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+      color: #64748b; font-weight: 600; margin-bottom: 10px;
+    }
+    .demo-stat .v { font-size: 30px; font-weight: 800; color: #17324d; line-height: 1; }
+    .demo-stat .sub { font-size: 12px; color: #94a3b8; margin-top: 6px; }
+
+    .demo-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 22px; }
+    .demo-panel {
+      background: #fff; border: 1px solid #e2e8f0; border-radius: 20px;
+      padding: 24px; box-shadow: 0 4px 14px rgba(0,0,0,.04);
+    }
+    .demo-panel h3 { font-size: 18px; color: #17324d; margin-bottom: 4px; font-weight: 700; }
+    .demo-panel .hint { font-size: 13px; color: #64748b; margin-bottom: 14px; }
+    .demo-panel.full { grid-column: 1 / -1; }
+    @media (max-width: 900px) {
+      .demo-stats { grid-template-columns: repeat(2, 1fr); }
+      .demo-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ── Hypotheses card ──────────────────────────────────── */
+    .quest-section { width: 92%; max-width: 1200px; margin: 60px auto; }
+    .quest-card {
+      background: #fff; border: 1px solid #e2e8f0; border-radius: 24px;
+      padding: 36px 38px; box-shadow: 0 8px 28px rgba(0,0,0,.06);
+    }
+    .quest-card-label {
+      display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+      padding-bottom: 22px; border-bottom: 1px solid #eef2f7; margin-bottom: 28px;
+    }
+    .part-pill {
+      background: #17324d; color: #fff; padding: 6px 14px; border-radius: 999px;
+      font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+    }
+    .quest-card-label h2 { font-size: 28px; color: #17324d; font-weight: 800; margin: 0; }
+    .qs-section-label {
+      font-size: 11px; letter-spacing: .16em; text-transform: uppercase;
+      color: #64748b; font-weight: 700; margin: 24px 0 14px;
+    }
+    .h1-list { display: grid; gap: 14px; }
+    .h1-item {
+      display: flex; align-items: stretch; background: #f8fafc;
+      border-radius: 14px; overflow: hidden; border: 1px solid #eef2f7;
+    }
+    .h1-accent { width: 6px; background: linear-gradient(180deg,#3b82f6,#06b6d4); flex-shrink:0; }
+    .h1-item:nth-child(2) .h1-accent { background: linear-gradient(180deg,#f59e0b,#f43f5e); }
+    .h1-item:nth-child(3) .h1-accent { background: linear-gradient(180deg,#10b981,#14b8a6); }
+    .h1-item-inner { padding: 16px 20px; flex: 1; }
+    .h1-item-tag { font-size: 12px; font-weight: 700; color: #17324d; letter-spacing: .04em; margin-bottom: 4px; }
+    .h1-item-inner p { color: #475569; line-height: 1.55; font-size: 14.5px; margin: 0; }
+
+    .findings-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .finding-block {
+      background: #f8fafc; border: 1px solid #eef2f7; border-radius: 14px; padding: 18px 20px;
+    }
+    .fb-name { font-weight: 700; color: #17324d; font-size: 15px; margin-bottom: 8px; }
+    .fb-badge {
+      display: inline-block; font-size: 11px; font-weight: 700; padding: 4px 10px;
+      border-radius: 999px; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 10px;
+    }
+    .fb-badge.correlated   { background: #dbeafe; color: #1d4ed8; }
+    .fb-badge.inconclusive { background: #fef3c7; color: #b45309; }
+    .finding-block p { font-size: 13.5px; color: #64748b; line-height: 1.55; margin: 0; }
+    @media (max-width: 768px) {
+      .findings-row { grid-template-columns: 1fr; }
+      .quest-card { padding: 24px 22px; }
+    }
+  </style>
 </head>
 <body>
 
@@ -83,7 +128,7 @@
     <a href="parking.html">Parking</a>
     <a href="forecast.html">Forecast</a>
     <a href="event.html">Event Idea</a>
-    <a>Kolding Quest</a>
+    <a href="kolding_quest.html">Kolding Quest</a>
   </div>
 </nav>
 
@@ -94,112 +139,153 @@
   </div>
 </section>
 
-<section class="kpis">
-  <div class="card">
-    <h3>Total Movement</h3>
-    <h2 id="movement">--</h2>
+
+
+<!-- ── Demographics ──────────────────────────────────────── -->
+<section class="demographics">
+  <div class="section-header">
+    <h2>Who Lives in Kolding?</h2>
+    <p>Population breakdown by age, sex, and citizenship — the foundation behind every urban behaviour pattern we observe.</p>
+    <div class="demo-source">Source: <strong>Statistics Denmark · StatBank FOLK1B</strong> · <span id="demoPeriod">—</span></div>
   </div>
-  <div class="card">
-    <h3>Events</h3>
-    <h2 id="events">--</h2>
+
+  <div class="demo-stats">
+    <div class="demo-stat"><h3>Total Residents</h3><div class="v" id="demoTotal">—</div></div>
+    <div class="demo-stat"><h3>Danish Citizens</h3><div class="v" id="demoDanish">—</div><div class="sub" id="demoDanishPct">—</div></div>
+    <div class="demo-stat"><h3>Foreign Citizens</h3><div class="v" id="demoForeign">—</div><div class="sub" id="demoForeignPct">—</div></div>
+    <div class="demo-stat"><h3>Nationalities</h3><div class="v" id="demoNats">—</div><div class="sub">represented</div></div>
   </div>
-  <div class="card">
-    <h3>Avg Stay</h3>
-    <h2 id="stay">--</h2>
-  </div>
-  <div class="card ai-card">
-    <h3>AI Insight</h3>
-    <p id="insight">Loading AI insight...</p>
+
+  <div class="demo-grid">
+    <div class="demo-panel">
+      <h3>Population pyramid</h3>
+      <p class="hint">Residents by 5-year age band and sex.</p>
+      <div id="pyramidChart" style="height:480px"></div>
+    </div>
+    <div class="demo-panel">
+      <h3>Citizenship composition</h3>
+      <p class="hint">Danish vs. foreign citizens.</p>
+      <div id="donutChart" style="height:480px"></div>
+    </div>
+    <div class="demo-panel full">
+      <h3>Top foreign nationalities</h3>
+      <p class="hint">The fifteen largest non-Danish citizen groups in Kolding.</p>
+      <div id="natChart" style="height:440px"></div>
+    </div>
+    <div class="demo-panel full">
+      <h3>Generations across borders</h3>
+      <p class="hint">Age distribution within the twelve largest foreign communities.</p>
+      <div id="heatChart" style="height:520px"></div>
+    </div>
   </div>
 </section>
-
-<section class="dashboard">
-  <div class="panel">
-    <h2>Movement Timeline</h2>
-    <div id="movementChart"></div>
+<!-- ── Axeltorv Mobility Analysis ──────────────────────────── -->
+<section class="axeltorv-section">
+ 
+  <div class="axeltorv-header">
+    <h2>Axeltorv Mobility Patterns</h2>
+    <p>Three views into pedestrian behaviour at Axeltorv — weekly rhythm, daily profile, and event signatures.</p>
   </div>
-  <div class="panel">
-    <h2>Stay Behaviour</h2>
-    <div id="stayChart"></div>
+ 
+  <div class="axeltorv-grid">
+ 
+    <!-- Chart 1: Heatmap (full width) -->
+    <div class="axeltorv-panel full">
+      <div class="axp-title">Weekday × Week Heatmap</div>
+      <div class="axp-hint">Daily pedestrian arrivals across every weekday and calendar week — darker = busier</div>
+      <img src="assets/heatmap_weekday_week.png" alt="Pedestrian arrivals heatmap" />
+    </div>
+ 
+    <!-- Chart 2 + 3: side by side -->
+    <div class="axeltorv-panel">
+      <div class="axp-title">Hourly Profile</div>
+      <div class="axp-hint">Average pedestrian arrivals by hour — weekday vs weekend</div>
+      <img src="assets/hourly_profile.png" alt="Hourly pedestrian profile" />
+    </div>
+ 
+    <div class="axeltorv-panel">
+      <div class="axp-title">Event Time-Signatures</div>
+      <div class="axp-hint">How four key events shaped hourly crowd arrivals at Axeltorv</div>
+      <img src="assets/event_signatures.png" alt="Event crowd signatures" />
+    </div>
+ 
   </div>
-  <section class="city-intelligence">
-  <section class="city-intelligence">
+ 
+</section>
 
-    <div class="section-header">
-        <h2>Shape the Future of Kolding</h2>
-        <p>
-            How is the city life in Kolding? What can be done to improve? 
-            Your voice matters!
-        </p>
+
+<!-- ── Hypotheses & Findings ─────────────────────────────── -->
+<section class="quest-section">
+  <div class="quest-card">
+    <div class="quest-card-label">
+      <span class="part-pill">Part 1</span>
+      <h2>Initial Hypotheses & Findings</h2>
     </div>
 
-    <div class="form-panel">
-        <iframe 
-            src="https://docs.google.com/forms/d/e/1FAIpQLSejrrKFq3_Ed8z6KsWg0eNPYN9zvxmvTGl0k6Hyy5Jja7jloA/viewform?usp=preview?embedded=true" 
-            marginheight="0" 
-            marginwidth="0">
-            Loading Form...
-        </iframe>
+    <div class="qs-section-label">Alternative Hypotheses (H1)</div>
+    <div class="h1-list">
+      <div class="h1-item">
+        <div class="h1-accent"></div>
+        <div class="h1-item-inner">
+          <div class="h1-item-tag">H1a · Event-driven</div>
+          <p>Local events and activities positively impact the willingness of people to visit the streets.</p>
+        </div>
+      </div>
+      <div class="h1-item">
+        <div class="h1-accent"></div>
+        <div class="h1-item-inner">
+          <div class="h1-item-tag">H1b · Weather-driven</div>
+          <p>Nice weather conditions significantly increase street-level engagement.</p>
+        </div>
+      </div>
+      <div class="h1-item">
+        <div class="h1-accent"></div>
+        <div class="h1-item-inner">
+          <div class="h1-item-tag">H1c · Infrastructure-driven</div>
+          <p>Accessible parking and smooth traffic flow positively influence the willingness to visit.</p>
+        </div>
+      </div>
     </div>
 
-    <style>
-        .city-intelligence {
-            width: 92%;
-            margin: 60px auto;
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .section-header h2 {
-            font-size: 40px;
-            color: #17324d;
-            margin-bottom: 15px;
-            font-weight: 800;
-        }
-
-        .section-header p {
-            max-width: 760px;
-            margin: auto;
-            color: #64748b;
-            line-height: 1.7;
-            font-size: 16px;
-        }
-
-        .form-panel {
-            background: white;
-            border-radius: 24px;
-            padding: 24px;
-            box-shadow: 0 8px 28px rgba(0,0,0,.08);
-            overflow: hidden;
-            max-width: 860px;
-            margin: 0 auto;
-            border: 1px solid #e2e8f0;
-        }
-
-        .form-panel iframe {
-            width: 100%;
-            height: 1000px; /* 如果表單題目較長，可自行增加此數值（例如 1100px）以避免雙捲軸 */
-            border: none;
-            display: block;
-        }
-    </style>
-
+    <div class="qs-section-label">Findings</div>
+    <div class="findings-row">
+      <div class="finding-block">
+        <div class="fb-name">Events</div>
+        <span class="fb-badge correlated">Correlated</span>
+        <p>Correlation observed but causality cannot be firmly established. More data required.</p>
+      </div>
+      <div class="finding-block">
+        <div class="fb-name">Weather</div>
+        <span class="fb-badge inconclusive">Inconclusive</span>
+        <p>Dataset too limited to reach statistical significance as a primary driver.</p>
+      </div>
+      <div class="finding-block">
+        <div class="fb-name">Transportation & Parking</div>
+        <span class="fb-badge correlated">Correlated</span>
+        <p>Correlated but lacks causality. Needs more data to prove willingness to visit.</p>
+      </div>
+    </div>
+  </div>
 </section>
 
-
-
-  </section>
+<!-- ── Survey ─────────────────────────────────────────────── -->
+<section class="city-intelligence">
+  <div class="section-header">
+    <h2>Shape the Future of Kolding</h2>
+    <p>How is the city life in Kolding? What can be done to improve? Your voice matters!</p>
+  </div>
+  <div class="form-panel">
+    <iframe
+      src="https://docs.google.com/forms/d/e/1FAIpQLSejrrKFq3_Ed8z6KsWg0eNPYN9zvxmvTGl0k6Hyy5Jja7jloA/viewform?embedded=true"
+      marginheight="0" marginwidth="0">Loading Form...</iframe>
+  </div>
 </section>
 
+<!-- ── Chat ───────────────────────────────────────────────── -->
 <button id="chat-toggle" aria-label="Open AI Assistant">🤖</button>
 
 <div id="chat-popup" role="dialog">
-  <div class="chat-header">
-    <h3>Kolding AI Analyst</h3>
-  </div>
+  <div class="chat-header"><h3>Kolding AI Analyst</h3></div>
   <div id="chat-messages">
     <div class="ai-msg welcome">
       🏙️ Urban Intelligence Assistant
@@ -229,5 +315,1080 @@
 </div>
 
 <script src="app.js"></script>
+
+<!-- ── Demographics renderer ──────────────────────────────── -->
+<script>
+(async function renderDemographics() {
+  const NAVY = '#17324d', BLUE = '#3b82f6', TEAL = '#06b6d4',
+        AMBER = '#f59e0b', SLATE = '#64748b', LIGHT = '#e2e8f0';
+  const FONT = { family: 'Inter, sans-serif', color: NAVY, size: 12 };
+  const fmt  = n => n.toLocaleString('en-US');
+
+  const data = {
+  "meta": {
+    "total": 96214,
+    "danish": 85413,
+    "foreign": 10801,
+    "men": 47987,
+    "women": 48227,
+    "period": "2026 Q2",
+    "nat_count": 120,
+    "source": "Statistics Denmark, StatBank FOLK1B"
+  },
+  "age": [
+    {
+      "age": "0-4",
+      "men": 2439,
+      "women": 2318,
+      "total": 4757
+    },
+    {
+      "age": "5-9",
+      "men": 2760,
+      "women": 2525,
+      "total": 5285
+    },
+    {
+      "age": "10-14",
+      "men": 2816,
+      "women": 2614,
+      "total": 5430
+    },
+    {
+      "age": "15-19",
+      "men": 3188,
+      "women": 3187,
+      "total": 6375
+    },
+    {
+      "age": "20-24",
+      "men": 2993,
+      "women": 2635,
+      "total": 5628
+    },
+    {
+      "age": "25-29",
+      "men": 2696,
+      "women": 2728,
+      "total": 5424
+    },
+    {
+      "age": "30-34",
+      "men": 3230,
+      "women": 2989,
+      "total": 6219
+    },
+    {
+      "age": "35-39",
+      "men": 3085,
+      "women": 3053,
+      "total": 6138
+    },
+    {
+      "age": "40-44",
+      "men": 2765,
+      "women": 2685,
+      "total": 5450
+    },
+    {
+      "age": "45-49",
+      "men": 2925,
+      "women": 3072,
+      "total": 5997
+    },
+    {
+      "age": "50-54",
+      "men": 3400,
+      "women": 3475,
+      "total": 6875
+    },
+    {
+      "age": "55-59",
+      "men": 3323,
+      "women": 3287,
+      "total": 6610
+    },
+    {
+      "age": "60-64",
+      "men": 3111,
+      "women": 3120,
+      "total": 6231
+    },
+    {
+      "age": "65-69",
+      "men": 2666,
+      "women": 2654,
+      "total": 5320
+    },
+    {
+      "age": "70-74",
+      "men": 2220,
+      "women": 2377,
+      "total": 4597
+    },
+    {
+      "age": "75-79",
+      "men": 1954,
+      "women": 2288,
+      "total": 4242
+    },
+    {
+      "age": "80-84",
+      "men": 1490,
+      "women": 1760,
+      "total": 3250
+    },
+    {
+      "age": "85-89",
+      "men": 685,
+      "women": 951,
+      "total": 1636
+    },
+    {
+      "age": "90-94",
+      "men": 200,
+      "women": 395,
+      "total": 595
+    },
+    {
+      "age": "95-99",
+      "men": 41,
+      "women": 101,
+      "total": 142
+    },
+    {
+      "age": "100 and over",
+      "men": 0,
+      "women": 13,
+      "total": 13
+    }
+  ],
+  "citizenship": [
+    {
+      "name": "Syria",
+      "count": 1001
+    },
+    {
+      "name": "Ukraine",
+      "count": 955
+    },
+    {
+      "name": "Romania",
+      "count": 826
+    },
+    {
+      "name": "Poland",
+      "count": 809
+    },
+    {
+      "name": "Germany",
+      "count": 482
+    },
+    {
+      "name": "Bosnia and Herzegovina",
+      "count": 459
+    },
+    {
+      "name": "Afghanistan",
+      "count": 369
+    },
+    {
+      "name": "India",
+      "count": 361
+    },
+    {
+      "name": "Bangladesh",
+      "count": 308
+    },
+    {
+      "name": "Nepal",
+      "count": 260
+    },
+    {
+      "name": "Iran",
+      "count": 252
+    },
+    {
+      "name": "Lithuania",
+      "count": 216
+    },
+    {
+      "name": "Somalia",
+      "count": 200
+    },
+    {
+      "name": "Kosovo",
+      "count": 193
+    },
+    {
+      "name": "Turkey",
+      "count": 192
+    },
+    {
+      "name": "Russia",
+      "count": 186
+    },
+    {
+      "name": "Vietnam",
+      "count": 175
+    },
+    {
+      "name": "Latvia",
+      "count": 159
+    },
+    {
+      "name": "Iceland",
+      "count": 158
+    },
+    {
+      "name": "Eritrea",
+      "count": 158
+    },
+    {
+      "name": "Hungary",
+      "count": 151
+    },
+    {
+      "name": "Bulgaria",
+      "count": 151
+    },
+    {
+      "name": "Norway",
+      "count": 144
+    },
+    {
+      "name": "Italy",
+      "count": 141
+    },
+    {
+      "name": "Netherlands",
+      "count": 128
+    },
+    {
+      "name": "Thailand",
+      "count": 127
+    },
+    {
+      "name": "Philippines",
+      "count": 125
+    },
+    {
+      "name": "China",
+      "count": 119
+    },
+    {
+      "name": "United Kingdom",
+      "count": 116
+    },
+    {
+      "name": "Sweden",
+      "count": 116
+    },
+    {
+      "name": "Spain",
+      "count": 106
+    },
+    {
+      "name": "Stateless",
+      "count": 105
+    },
+    {
+      "name": "Iraq",
+      "count": 96
+    },
+    {
+      "name": "USA",
+      "count": 87
+    },
+    {
+      "name": "Sri Lanka",
+      "count": 87
+    },
+    {
+      "name": "Serbia",
+      "count": 83
+    },
+    {
+      "name": "Croatia",
+      "count": 66
+    },
+    {
+      "name": "Congo, Democratic Republic",
+      "count": 66
+    },
+    {
+      "name": "Slovakia",
+      "count": 59
+    },
+    {
+      "name": "Portugal",
+      "count": 57
+    },
+    {
+      "name": "France",
+      "count": 54
+    },
+    {
+      "name": "Brazil",
+      "count": 52
+    },
+    {
+      "name": "Greece",
+      "count": 48
+    },
+    {
+      "name": "Czech Republic",
+      "count": 37
+    },
+    {
+      "name": "Uganda",
+      "count": 32
+    },
+    {
+      "name": "Pakistan",
+      "count": 30
+    },
+    {
+      "name": "Mexico",
+      "count": 29
+    },
+    {
+      "name": "Ireland",
+      "count": 27
+    },
+    {
+      "name": "Ghana",
+      "count": 27
+    },
+    {
+      "name": "Nigeria",
+      "count": 26
+    },
+    {
+      "name": "Finland",
+      "count": 23
+    },
+    {
+      "name": "Switzerland",
+      "count": 23
+    },
+    {
+      "name": "Austria",
+      "count": 21
+    },
+    {
+      "name": "Montenegro",
+      "count": 20
+    },
+    {
+      "name": "Tunisia",
+      "count": 20
+    },
+    {
+      "name": "Kenya",
+      "count": 19
+    },
+    {
+      "name": "Lebanon",
+      "count": 18
+    },
+    {
+      "name": "Indonesia",
+      "count": 18
+    },
+    {
+      "name": "Georgia",
+      "count": 17
+    },
+    {
+      "name": "Armenia",
+      "count": 16
+    },
+    {
+      "name": "Canada",
+      "count": 16
+    },
+    {
+      "name": "Cameroon",
+      "count": 15
+    },
+    {
+      "name": "Moldova",
+      "count": 15
+    },
+    {
+      "name": "Republic of North Macedonia",
+      "count": 15
+    },
+    {
+      "name": "Belgium",
+      "count": 14
+    },
+    {
+      "name": "Zambia",
+      "count": 14
+    },
+    {
+      "name": "Tanzania",
+      "count": 14
+    },
+    {
+      "name": "Estonia",
+      "count": 13
+    },
+    {
+      "name": "Ethiopia",
+      "count": 13
+    },
+    {
+      "name": "Myanmar",
+      "count": 13
+    },
+    {
+      "name": "Slovenia",
+      "count": 13
+    },
+    {
+      "name": "Morocco",
+      "count": 13
+    },
+    {
+      "name": "South Korea",
+      "count": 12
+    },
+    {
+      "name": "Japan",
+      "count": 12
+    },
+    {
+      "name": "Egypt",
+      "count": 12
+    },
+    {
+      "name": "Sudan",
+      "count": 12
+    },
+    {
+      "name": "Australia",
+      "count": 11
+    },
+    {
+      "name": "Uzbekistan",
+      "count": 11
+    },
+    {
+      "name": "Albania",
+      "count": 11
+    },
+    {
+      "name": "Colombia",
+      "count": 11
+    },
+    {
+      "name": "Argentina",
+      "count": 11
+    },
+    {
+      "name": "Chile",
+      "count": 10
+    },
+    {
+      "name": "Algeria",
+      "count": 8
+    },
+    {
+      "name": "Peru",
+      "count": 8
+    },
+    {
+      "name": "Israel",
+      "count": 7
+    },
+    {
+      "name": "Namibia",
+      "count": 7
+    },
+    {
+      "name": "Belarus",
+      "count": 6
+    },
+    {
+      "name": "South Africa",
+      "count": 6
+    },
+    {
+      "name": "New Zealand",
+      "count": 5
+    },
+    {
+      "name": "Venezuela",
+      "count": 5
+    },
+    {
+      "name": "Liberia",
+      "count": 5
+    },
+    {
+      "name": "Libya",
+      "count": 5
+    },
+    {
+      "name": "Congo, Republic",
+      "count": 4
+    },
+    {
+      "name": "Ecuador",
+      "count": 4
+    },
+    {
+      "name": "Cuba",
+      "count": 4
+    },
+    {
+      "name": "Serbia and Montenegro",
+      "count": 3
+    },
+    {
+      "name": "Jordan",
+      "count": 3
+    },
+    {
+      "name": "Guinea",
+      "count": 3
+    },
+    {
+      "name": "Yugoslavia",
+      "count": 3
+    },
+    {
+      "name": "Zimbabwe",
+      "count": 3
+    },
+    {
+      "name": "Azerbaijan",
+      "count": 3
+    },
+    {
+      "name": "Taiwan",
+      "count": 2
+    },
+    {
+      "name": "Singapore",
+      "count": 2
+    },
+    {
+      "name": "Benin",
+      "count": 2
+    },
+    {
+      "name": "Yugoslavia, Federal Republic",
+      "count": 1
+    },
+    {
+      "name": "Yemen",
+      "count": 1
+    },
+    {
+      "name": "Cyprus",
+      "count": 1
+    },
+    {
+      "name": "Malta",
+      "count": 1
+    },
+    {
+      "name": "Fiji",
+      "count": 1
+    },
+    {
+      "name": "Honduras",
+      "count": 1
+    },
+    {
+      "name": "Dominican Republic",
+      "count": 1
+    },
+    {
+      "name": "Central African Republic",
+      "count": 1
+    },
+    {
+      "name": "Gambia, The",
+      "count": 1
+    },
+    {
+      "name": "Mozambique",
+      "count": 1
+    },
+    {
+      "name": "Rwanda",
+      "count": 1
+    },
+    {
+      "name": "Africa not stated",
+      "count": 1
+    },
+    {
+      "name": "Cambodia",
+      "count": 1
+    },
+    {
+      "name": "Belize",
+      "count": 1
+    },
+    {
+      "name": "El Salvador",
+      "count": 1
+    },
+    {
+      "name": "Costa Rica",
+      "count": 1
+    }
+  ],
+  "heat": {
+    "ages": [
+      "0-4",
+      "5-9",
+      "10-14",
+      "15-19",
+      "20-24",
+      "25-29",
+      "30-34",
+      "35-39",
+      "40-44",
+      "45-49",
+      "50-54",
+      "55-59",
+      "60-64",
+      "65-69",
+      "70-74",
+      "75-79",
+      "80-84",
+      "85-89",
+      "90-94",
+      "95-99",
+      "100 and over"
+    ],
+    "nats": [
+      {
+        "name": "Syria",
+        "vals": [
+          80,
+          114,
+          126,
+          89,
+          85,
+          77,
+          88,
+          86,
+          87,
+          62,
+          43,
+          24,
+          11,
+          18,
+          5,
+          3,
+          2,
+          0,
+          1,
+          0,
+          0
+        ],
+        "total": 1001
+      },
+      {
+        "name": "Ukraine",
+        "vals": [
+          49,
+          73,
+          73,
+          89,
+          104,
+          56,
+          105,
+          127,
+          85,
+          67,
+          25,
+          18,
+          27,
+          23,
+          18,
+          12,
+          1,
+          3,
+          0,
+          0,
+          0
+        ],
+        "total": 955
+      },
+      {
+        "name": "Romania",
+        "vals": [
+          49,
+          64,
+          40,
+          34,
+          75,
+          83,
+          96,
+          150,
+          106,
+          60,
+          32,
+          19,
+          8,
+          3,
+          5,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        "total": 826
+      },
+      {
+        "name": "Poland",
+        "vals": [
+          23,
+          32,
+          56,
+          39,
+          68,
+          81,
+          75,
+          96,
+          113,
+          95,
+          50,
+          34,
+          14,
+          17,
+          10,
+          4,
+          0,
+          0,
+          2,
+          0,
+          0
+        ],
+        "total": 809
+      },
+      {
+        "name": "Germany",
+        "vals": [
+          15,
+          14,
+          17,
+          21,
+          45,
+          39,
+          30,
+          46,
+          29,
+          46,
+          45,
+          45,
+          26,
+          18,
+          15,
+          10,
+          14,
+          6,
+          1,
+          0,
+          0
+        ],
+        "total": 482
+      },
+      {
+        "name": "Bosnia and Herzegovina",
+        "vals": [
+          13,
+          11,
+          21,
+          13,
+          17,
+          18,
+          27,
+          46,
+          41,
+          21,
+          32,
+          33,
+          44,
+          53,
+          30,
+          25,
+          9,
+          3,
+          2,
+          0,
+          0
+        ],
+        "total": 459
+      },
+      {
+        "name": "Afghanistan",
+        "vals": [
+          20,
+          31,
+          21,
+          28,
+          24,
+          30,
+          38,
+          42,
+          31,
+          17,
+          20,
+          15,
+          15,
+          15,
+          5,
+          3,
+          5,
+          7,
+          1,
+          1,
+          0
+        ],
+        "total": 369
+      },
+      {
+        "name": "India",
+        "vals": [
+          29,
+          22,
+          17,
+          11,
+          22,
+          68,
+          80,
+          56,
+          30,
+          15,
+          9,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "total": 361
+      },
+      {
+        "name": "Bangladesh",
+        "vals": [
+          14,
+          9,
+          5,
+          4,
+          84,
+          115,
+          49,
+          22,
+          4,
+          0,
+          2,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "total": 308
+      },
+      {
+        "name": "Nepal",
+        "vals": [
+          6,
+          5,
+          2,
+          3,
+          109,
+          69,
+          41,
+          16,
+          8,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "total": 260
+      },
+      {
+        "name": "Iran",
+        "vals": [
+          15,
+          16,
+          19,
+          9,
+          9,
+          13,
+          21,
+          35,
+          44,
+          20,
+          18,
+          15,
+          9,
+          7,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "total": 252
+      },
+      {
+        "name": "Lithuania",
+        "vals": [
+          9,
+          12,
+          9,
+          9,
+          10,
+          28,
+          35,
+          30,
+          24,
+          18,
+          14,
+          9,
+          6,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "total": 216
+      }
+    ]
+  }
+};
+
+  const m = data.meta;
+  document.getElementById('demoTotal').textContent      = fmt(m.total);
+  document.getElementById('demoDanish').textContent     = fmt(m.danish);
+  document.getElementById('demoForeign').textContent    = fmt(m.foreign);
+  document.getElementById('demoNats').textContent       = m.nat_count;
+  document.getElementById('demoPeriod').textContent     = m.period;
+  document.getElementById('demoDanishPct').textContent  = (m.danish  / m.total * 100).toFixed(1) + '% of population';
+  document.getElementById('demoForeignPct').textContent = (m.foreign / m.total * 100).toFixed(1) + '% of population';
+
+  const layoutBase = {
+    font: FONT,
+    paper_bgcolor: 'rgba(0,0,0,0)',
+    plot_bgcolor:  'rgba(0,0,0,0)',
+    margin: { l: 60, r: 20, t: 20, b: 50 },
+  };
+  const cfg = { displayModeBar: false, responsive: true };
+
+  // Population pyramid
+  const ages = data.age.map(a => a.age);
+  Plotly.newPlot('pyramidChart', [
+    { y: ages, x: data.age.map(a => -a.men), name: 'Men',
+      type: 'bar', orientation: 'h', marker: { color: TEAL },
+      hovertemplate: '<b>Men %{y}</b><br>%{customdata:,} people<extra></extra>',
+      customdata: data.age.map(a => a.men) },
+    { y: ages, x: data.age.map(a => a.women), name: 'Women',
+      type: 'bar', orientation: 'h', marker: { color: AMBER },
+      hovertemplate: '<b>Women %{y}</b><br>%{x:,} people<extra></extra>' }
+  ], {
+    ...layoutBase,
+    barmode: 'overlay', bargap: 0.15,
+    xaxis: {
+      tickvals: [-3000,-1500,0,1500,3000],
+      ticktext: ['3,000','1,500','0','1,500','3,000'],
+      gridcolor: LIGHT, zerolinecolor: SLATE,
+    },
+    yaxis: { autorange: 'reversed', gridcolor: 'transparent' },
+    legend: { orientation: 'h', y: -0.12, x: 0.5, xanchor: 'center' },
+  }, cfg);
+
+  // Donut
+  Plotly.newPlot('donutChart', [{
+    values: [m.danish, m.foreign],
+    labels: ['Danish citizens', 'Foreign citizens'],
+    type: 'pie', hole: 0.62,
+    marker: { colors: [BLUE, AMBER], line: { color: '#fff', width: 3 } },
+    textinfo: 'label+percent', textposition: 'outside',
+    hovertemplate: '<b>%{label}</b><br>%{value:,} people<br>%{percent}<extra></extra>',
+  }], {
+    ...layoutBase,
+    margin: { l: 20, r: 20, t: 30, b: 20 },
+    showlegend: false,
+    annotations: [
+      { text: fmt(m.total), x: 0.5, y: 0.55, font: { size: 26, color: NAVY, family: 'Inter' }, showarrow: false },
+      { text: 'residents',  x: 0.5, y: 0.43, font: { size: 12, color: SLATE },                 showarrow: false },
+    ],
+  }, cfg);
+
+  // Top nationalities
+  const top15 = data.citizenship.slice(0, 15);
+  Plotly.newPlot('natChart', [{
+    x: top15.map(c => c.count),
+    y: top15.map(c => c.name),
+    type: 'bar', orientation: 'h',
+    marker: { color: top15.map((_, i) => `rgba(59,130,246,${1 - i * 0.04})`) },
+    hovertemplate: '<b>%{y}</b><br>%{x:,} residents<extra></extra>',
+    text: top15.map(c => fmt(c.count)), textposition: 'outside',
+  }], {
+    ...layoutBase,
+    margin: { l: 160, r: 60, t: 20, b: 40 },
+    xaxis: { gridcolor: LIGHT },
+    yaxis: { autorange: 'reversed', gridcolor: 'transparent' },
+  }, cfg);
+
+  // Heatmap
+  const H = data.heat;
+  Plotly.newPlot('heatChart', [{
+    z: H.nats.map(n => n.vals),
+    x: H.ages,
+    y: H.nats.map(n => n.name),
+    type: 'heatmap',
+    colorscale: [[0,'#f1f5f9'],[0.25,'#bfdbfe'],[0.6,'#3b82f6'],[1,'#1e3a8a']],
+    hovertemplate: '<b>%{y} · %{x}</b><br>%{z:,} people<extra></extra>',
+    colorbar: { thickness: 12, len: 0.7, tickfont: FONT, outlinewidth: 0 },
+  }], {
+    ...layoutBase,
+    margin: { l: 180, r: 40, t: 20, b: 60 },
+    xaxis: { side: 'bottom', tickangle: -45, gridcolor: 'transparent' },
+    yaxis: { autorange: 'reversed', gridcolor: 'transparent' },
+  }, cfg);
+})();
+</script>
+
 </body>
 </html>

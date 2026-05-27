@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kolding Quest | Kolding Pulse</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    .quest-page {
+      min-height: 100vh;
+      background: linear-gradient(160deg, #fde8e8 0%, #fcd5d5 30%, #f9c0c0 60%, #c97070 100%);
+    }
+
+    /* ── Hero ─────────────────────────────────────────────── */
+    .quest-hero {
+      height: 950px;
+      background: url('assets/kc.png');
+      background-size: cover;
+      background-position: center -50px;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .quest-hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(15,23,42,.55), rgba(15,23,42,.15));
+      z-index: 1;
+    }
+
+    .quest-hero::after {
+      content: "";
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      height: 120px;
+      background: linear-gradient(
+        transparent 0%,
+        rgba(253,232,232,.6) 50%,
+        #fde8e8 100%
+      );
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      z-index: 2;
+    }
+
+    .quest-hero .hero-content {
+      padding-left: 85px;
+      max-width: 760px;
+      z-index: 3;
+      position: relative;
+    }
+
+    .quest-hero-eyebrow {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.6);
+      margin-bottom: 16px;
+    }
+
+    .quest-hero h1 {
+      font-size: 72px;
+      font-weight: 800;
+      letter-spacing: -2px;
+      color: white;
+      line-height: 1;
+      margin: 0 0 16px;
+      text-shadow: 0 4px 18px rgba(0,0,0,.3);
+    }
+
+    .quest-hero p {
+      font-size: 20px;
+      color: rgba(255,255,255,.82);
+      max-width: 520px;
+      line-height: 1.7;
+      margin: 0;
+    }
+
+    /* ── Layout ───────────────────────────────────────────── */
+    .quest-content {
+      padding: 40px 40px 80px;
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    /* ── Cards ────────────────────────────────────────────── */
+    .quest-card {
+      background: white;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 4px 32px rgba(180, 60, 60, .10);
+    }
+
+    .quest-card-label {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 26px 32px 0;
+    }
+
+    .part-pill {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      background: #f9e0e0;
+      color: #b03030;
+      padding: 6px 14px;
+      border-radius: 20px;
+    }
+
+    .quest-card-label h2 {
+      font-size: 22px;
+      font-weight: 700;
+      color: #1a0a0a;
+      margin: 0;
+    }
+
+    .section-label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #b8a0a0;
+      padding: 26px 32px 12px;
+    }
+
+    /* ── Context blocks ───────────────────────────────────── */
+    .context-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      padding: 0 24px 24px;
+    }
+
+    .ctx-block {
+      background: #fdf5f5;
+      border-radius: 16px;
+      padding: 22px;
+    }
+
+    .ctx-block .ctx-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #c08080;
+      margin-bottom: 10px;
+    }
+
+    .ctx-block p {
+      font-size: 15px;
+      color: #4a2020;
+      line-height: 1.65;
+      margin: 0;
+    }
+
+    /* ── Strategy ─────────────────────────────────────────── */
+    .strategy-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      padding: 0 24px 24px;
+    }
+
+    .str-block {
+      background: #fdf5f5;
+      border-radius: 16px;
+      padding: 22px;
+    }
+
+    .str-block .str-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #c08080;
+      margin-bottom: 10px;
+    }
+
+    .str-block p {
+      font-size: 15px;
+      color: #4a2020;
+      line-height: 1.65;
+      margin: 0;
+    }
+
+    /* ── Overarching hypothesis ───────────────────────────── */
+    .overarch {
+      margin: 0 24px 28px;
+      background: linear-gradient(135deg, #c75050, #a03030);
+      border-radius: 20px;
+      padding: 30px 32px;
+    }
+
+    .overarch .oa-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.5);
+      margin-bottom: 12px;
+    }
+
+    .overarch > p {
+      font-size: 17px;
+      line-height: 1.75;
+      color: rgba(255,255,255,.92);
+      margin: 0 0 22px;
+    }
+
+    .sub-h-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .sub-h-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      background: rgba(255,255,255,.1);
+      border-radius: 14px;
+      padding: 16px 18px;
+    }
+
+    .sub-h-item .sh-tag {
+      font-size: 11px;
+      font-weight: 700;
+      color: #fcd5d5;
+      white-space: nowrap;
+      margin-top: 2px;
+      letter-spacing: .5px;
+      min-width: 140px;
+    }
+
+    .sub-h-item p {
+      font-size: 15px;
+      color: rgba(255,255,255,.85);
+      line-height: 1.65;
+      margin: 0;
+    }
+
+    /* ── Image divider ────────────────────────────────────── */
+    .img-divider {
+      position: relative;
+      border-radius: 0;
+      overflow: hidden;
+      margin: 0 -40px;
+    }
+
+    .img-divider img {
+      width: 100%;
+      max-height: 460px;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      -webkit-mask-image:
+        linear-gradient(to right,  transparent 0%, black 8%, black 92%, transparent 100%),
+        linear-gradient(to bottom, transparent 0%, black 12%, black 88%, transparent 100%);
+      -webkit-mask-composite: destination-in;
+      mask-image:
+        linear-gradient(to right,  transparent 0%, black 8%, black 92%, transparent 100%),
+        linear-gradient(to bottom, transparent 0%, black 12%, black 88%, transparent 100%);
+      mask-composite: intersect;
+    }
+
+    /* ── Module cards (Part 3) ────────────────────────────── */
+    .modules-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      padding: 0 24px 28px;
+    }
+
+    .mod-card {
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 2px 14px rgba(180,60,60,.1);
+    }
+
+    .mod-top {
+      padding: 26px 24px 20px;
+      background: #c75050;
+    }
+
+    .mod-letter {
+      font-size: 42px;
+      font-weight: 800;
+      color: rgba(255,255,255,.2);
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+
+    .mod-top h3 {
+      font-size: 17px;
+      font-weight: 700;
+      color: white;
+      margin: 0 0 4px;
+    }
+
+    .mod-top .mod-sub {
+      font-size: 12px;
+      color: rgba(255,255,255,.55);
+    }
+
+    .mod-body {
+      background: #fdf5f5;
+      padding: 20px 22px;
+    }
+
+    .mod-body ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .mod-body ul li {
+      font-size: 14px;
+      color: #5a2020;
+      line-height: 1.65;
+      padding-left: 16px;
+      position: relative;
+    }
+
+    .mod-body ul li::before {
+      content: "·";
+      position: absolute;
+      left: 0;
+      color: #c07070;
+      font-weight: 700;
+      font-size: 18px;
+      line-height: 1.4;
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="nav-left">
+    <img src="assets/kolding_kommune_image.png" alt="Kolding Kommune" />
+  </div>
+  <div class="nav-center">
+    <h1>Kolding Pulse</h1>
+    <p>Urban Intelligence Platform</p>
+  </div>
+  <div class="nav-right">
+    <a href="index.html">Overview</a>
+    <a href="city.html">City</a>
+    <a href="parking.html">Parking</a>
+    <a href="forecast.html">Forecast</a>
+    <a href="event.html">Event Idea</a>
+    <a>Kolding Quest</a>
+  </div>
+</nav>
+
+<div class="quest-page">
+
+  <!-- HERO -->
+  <section class="quest-hero">
+    <div class="hero-content">
+      <div class="quest-hero-eyebrow">Research & Strategy</div>
+      <h1>Kolding Quest</h1>
+      <p>Gamified intergenerational placemaking — bridging youth and elderly through urban play, shared heritage, and community connection.</p>
+    </div>
+  </section>
+
+  <div class="quest-content">
+
+    <!-- ── PART 2 ────────────────────────────────────────── -->
+    <div class="quest-card">
+      <div class="quest-card-label">
+        <span class="part-pill">Part 2</span>
+        <h2>Building a Bigger Hypothesis</h2>
+      </div>
+
+      <div class="section-label">Context — Connection Matters</div>
+      <div class="context-row">
+        <div class="ctx-block">
+          <div class="ctx-label">The Opportunity</div>
+          <p>Kolding possesses a balanced age distribution — a demographic dividend waiting to be activated.</p>
+        </div>
+        <div class="ctx-block">
+          <div class="ctx-label">The Challenge</div>
+          <p>Severe lack of cross-generational interaction leaves age groups isolated from one another.</p>
+        </div>
+        <div class="ctx-block">
+          <div class="ctx-label">The Goal</div>
+          <p>Activate the demographic dividend to build urban resilience and sustainable placemaking.</p>
+        </div>
+      </div>
+
+      <div class="section-label">Strategy — Ecosystem Extension over Reinvention</div>
+      <div class="strategy-row">
+        <div class="str-block">
+          <div class="str-label">Approach</div>
+          <p>Implement a location-based, gamified application module layered onto existing infrastructure.</p>
+        </div>
+        <div class="str-block">
+          <div class="str-label">Key Principle</div>
+          <p>Do NOT replace Kolding's existing official app. Act as an "Ecosystem Extension" — injecting new community engagement without increasing user friction.</p>
+        </div>
+      </div>
+
+      <div class="section-label">Overarching Hypothesis & Sub-Hypotheses</div>
+      <div class="overarch">
+        <div class="oa-label">Overarching Hypothesis</div>
+        <p>Transforming the city into an interactive canvas that bridges youth tech-savviness with elderly heritage knowledge will significantly enhance social cohesion.</p>
+        <div class="sub-h-list">
+          <div class="sub-h-item">
+            <span class="sh-tag">SH1 · Youth & Economy</span>
+            <p>Digital coupons and hidden "nice spot" recommendations will drive youth outdoors while revitalizing local merchants.</p>
+          </div>
+          <div class="sub-h-item">
+            <span class="sh-tag">SH2 · Event Visibility</span>
+            <p>Location-Based Services triggering pop-up notifications for nearby events will break information bubbles and combat fragmented interests.</p>
+          </div>
+          <div class="sub-h-item">
+            <span class="sh-tag">SH3 · Community Breakthrough</span>
+            <p>Geolocation broadcasting of local group activities will turn closed gatherings into open events, driving organic participation.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── IMAGE DIVIDER ────────────────────────────────────── -->
+    <div class="img-divider">
+      <img src="assets/kolding_quest_mockup.png" alt="Kolding Quest App" />
+    </div>
+
+    <!-- ── PART 3 ────────────────────────────────────────── -->
+    <div class="quest-card">
+      <div class="quest-card-label">
+        <span class="part-pill">Part 3</span>
+        <h2>Proving the Hypothesis — Future Roadmap</h2>
+      </div>
+
+      <div class="section-label">Validation through Intergenerational Modules</div>
+      <div class="modules-grid">
+        <div class="mod-card">
+          <div class="mod-top">
+            <div class="mod-letter">A</div>
+            <h3>Digital Memory Checkpoints</h3>
+            <div class="mod-sub">Gamified Heritage</div>
+          </div>
+          <div class="mod-body">
+            <ul>
+              <li>Location-based checkpoints at historical spots across the city.</li>
+              <li>Youth unlock rewards by interacting with elderly volunteers at "History Cafés".</li>
+              <li>Fosters organic cultural exchange between generations.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="mod-card">
+          <div class="mod-top">
+            <div class="mod-letter">B</div>
+            <h3>Co-Creation Quests</h3>
+            <div class="mod-sub">Community Kitchens</div>
+          </div>
+          <div class="mod-body">
+            <ul>
+              <li>In-app collaborative quests for youth to gather local ingredients.</li>
+              <li>Quests conclude at real-world community kitchens.</li>
+              <li>Elderly residents guide youth in cooking traditional recipes.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="mod-card">
+          <div class="mod-top">
+            <div class="mod-letter">C</div>
+            <h3>Tech-Assisted Walks</h3>
+            <div class="mod-sub">Digital Bridges</div>
+          </div>
+          <div class="mod-body">
+            <ul>
+              <li>Elderly define "slow-pace" routes based on daily routines.</li>
+              <li>Youth join routes to earn points as "digital bridges".</li>
+              <li>Youth help elderly troubleshoot tech issues in a low-pressure setting.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

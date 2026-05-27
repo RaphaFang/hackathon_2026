@@ -130,4 +130,105 @@ def get_full_ai_context() -> str:
     )
     sections.append(f"=== DAILY VITALITY (movement + stay combined) ===\n{vit_lines}")
 
+    # ── Parking data ──────────────────────────────────────────────────────────
+    try:
+        import pandas as pd
+        from config import DATA_DIR
+
+        df_cum   = pd.read_csv(DATA_DIR / "cache_parking_hourly_sim.csv")
+        baseline = pd.read_csv(DATA_DIR / "cache_parking_baseline.csv")
+        parking  = pd.read_csv(DATA_DIR / "parking_snapshot.csv")
+
+        core_cap  = int(parking[parking["distance_km"] <= 0.5]["spaceCount"].sum())
+        total_cap = int(parking[parking["distance_km"] <= 0.7]["spaceCount"].sum())
+
+        avg_occ  = df_cum["occupancy_rate"].mean()
+        peak_occ = df_cum["occupancy_rate"].max()
+        peak_row = df_cum.loc[df_cum["occupancy_rate"].idxmax()]
+
+        sections.append(
+            f"=== PARKING OVERVIEW ===\n"
+            f"  Core capacity (<0.5 km)   : {core_cap} spaces\n"
+            f"  Total capacity (<0.7 km)  : {total_cap} spaces\n"
+            f"  Average occupancy rate    : {avg_occ:.1%}\n"
+            f"  Peak occupancy rate       : {peak_occ:.1%}\n"
+            f"  Peak occurred on          : {peak_row['date']} at {int(peak_row['hour']):02d}:00\n"
+            f"  Day type at peak          : {peak_row['group']}"
+        )
+
+        hourly_occ = (
+            df_cum.groupby("hour")["occupancy_rate"]
+            .mean()
+            .reset_index()
+        )
+        pk_lines = "\n".join(
+            f"  {int(r['hour']):02d}:00 — {r['occupancy_rate']:.1%}"
+            for _, r in hourly_occ.iterrows()
+        )
+        sections.append(f"=== PARKING HOURLY AVERAGE OCCUPANCY ===\n{pk_lines}")
+
+        cong = pd.read_csv(DATA_DIR / "precomputed_hourly_congestion.csv")
+        cong_hourly = cong.groupby("hour")["congestion_score"].mean().reset_index()
+        cong_lines = "\n".join(
+            f"  {int(r['hour']):02d}:00 — {r['congestion_score']:.0f} vehicles"
+            for _, r in cong_hourly.iterrows()
+        )
+        sections.append(f"=== STREET CONGESTION BY HOUR (average vehicles) ===\n{cong_lines}")
+
+    except Exception as e:
+        sections.append(f"=== PARKING DATA ===\n  Unavailable: {e}")
+
+    # ── Forecast data ──────────────────────────────────────────────────────────
+    try:
+        import pandas as pd
+        from config import DATA_DIR
+
+        DAY_NAMES = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"]
+        mv = pd.read_csv(DATA_DIR / "movement_stats_hourly.csv")
+        mv["ts"]      = pd.to_datetime(mv["timestamp"], utc=True).dt.tz_convert("Europe/Copenhagen")
+        mv["datestr"] = mv["ts"].dt.strftime("%Y-%m-%d")
+        mv["hour"]    = mv["ts"].dt.hour
+        mv["dow"]     = mv["ts"].dt.dayofweek
+
+        ped       = mv[(mv["category"] == "pedestrian") & (mv["direction"] == "IN")]
+        daily     = ped.groupby("datestr")["amount"].sum()
+        good      = daily[daily >= 200].index
+        pedg      = ped[ped["datestr"].isin(good)]
+
+        dt        = pedg.groupby("datestr").agg(total=("amount","sum"), dow=("dow","first"))
+        level     = dt.groupby("dow")["total"].agg(["mean","std"]).reindex(range(7))
+
+        fc_lines = "\n".join(
+            f"  {DAY_NAMES[i]}: avg {round(float(level.loc[i,'mean'])):,} arrivals "
+            f"(±{round(float(level.loc[i,'std'])):,})"
+            for i in range(7)
+            if not pd.isna(level.loc[i,"mean"])
+        )
+        hi_idx = int(level["mean"].idxmax())
+        lo_idx = int(level["mean"].idxmin())
+        sections.append(
+            f"=== PEDESTRIAN FORECAST BY WEEKDAY ===\n"
+            f"  Busiest day : {DAY_NAMES[hi_idx]} ({round(float(level.loc[hi_idx,'mean'])):,} avg arrivals)\n"
+            f"  Quietest day: {DAY_NAMES[lo_idx]} ({round(float(level.loc[lo_idx,'mean'])):,} avg arrivals)\n"
+            f"{fc_lines}"
+        )
+    except Exception as e:
+        sections.append(f"=== FORECAST DATA ===\n  Unavailable: {e}")
+
+    # ── City / locations data ─────────────────────────────────────────────────
+    try:
+        import pandas as pd
+        from config import DATA_DIR
+
+        loc = pd.read_csv(DATA_DIR / "akseltorv_locations_cleaned_data.csv")
+        type_counts = loc["type"].value_counts()
+        type_lines  = "\n".join(f"  {t}: {n}" for t, n in type_counts.items())
+        sections.append(
+            f"=== CITY LOCATIONS (Akseltorv area) ===\n"
+            f"  Total places: {len(loc)}\n"
+            f"{type_lines}"
+        )
+    except Exception as e:
+        sections.append(f"=== CITY LOCATIONS DATA ===\n  Unavailable: {e}")
+
     return "\n\n".join(sections)

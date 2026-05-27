@@ -2,8 +2,12 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from routers import ai, city, forecast, overview, parking
+from fastapi.staticfiles import StaticFiles
 
 app = FastAPI(title="Kolding Pulse API")
+
+
+app.mount("/data", StaticFiles(directory="data"), name="data")
 
 app.add_middleware(
     CORSMiddleware,
